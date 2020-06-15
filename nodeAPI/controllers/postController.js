@@ -1,6 +1,6 @@
 //Pretty much a mongoose method that we configured to be reused
 const Post = require('../models/postModel');
-const catchAsync = require('../utilility/catchAsync');
+const catchAsync = require('../utililities/catchAsync');
 
 exports.getPosts = (req, res) => {
   res.json({
