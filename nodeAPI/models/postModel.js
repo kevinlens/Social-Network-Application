@@ -4,21 +4,27 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: [
-      true,
+    required: [true, 'Please write a title'],
+    minlength: [
+      4,
       'Title must be between 4 to 150 characters',
     ],
-    minlength: 4,
-    maxlength: 150,
+    maxlength: [
+      150,
+      'Title must be between 4 to 150 characters',
+    ],
   },
   body: {
     type: String,
-    required: [
-      true,
+    required: [true, 'Please write a body'],
+    minlength: [
+      4,
       'Body must be between 4 to 2000 characters',
     ],
-    minlength: 4,
-    maxlength: 2000,
+    maxlength: [
+      2000,
+      'Body must be between 4 to 2000 characters',
+    ],
   },
 });
 

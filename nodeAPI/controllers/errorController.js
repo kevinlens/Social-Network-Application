@@ -11,7 +11,7 @@ const sendErrorDev = (err, res) => {
   });
 };
 
-const handleValidationErrorDB = (err) => {
+const handleValidationErrorDB = (err, res) => {
   //turns object into an array using Object.value() and store it there
   const errors = Object.values(err.errors).map(
     (element) => element.message
@@ -21,7 +21,9 @@ const handleValidationErrorDB = (err) => {
     '. '
   )}`;
 
-  return new AppError(message, 400);
+  res.status(err.statusCode).json({
+    error: message,
+  });
 };
 
 //This is the global error handler that is referred to from the app.js
@@ -30,8 +32,9 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
-  // if(process.env.NODE_ENV === 'development'){}
-  if (err.name === 'ValidationError')
-    err = handleValidationErrorDB(err);
-  sendErrorDev(err, res);
+  if (err.name === 'ValidationError') {
+    err = handleValidationErrorDB(err, res);
+  } else {
+    sendErrorDev(err, res);
+  }
 };
