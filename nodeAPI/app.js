@@ -4,7 +4,6 @@ const app = express();
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const expressValidator = require('express-validator');
 const dotenv = require('dotenv');
 const globalErrorHandler = require('./controllers/errorController');
 //enable .env file configuration
@@ -42,8 +41,6 @@ const postRoutes = require('./routes/postRoute');
 app.use(morgan('dev'));
 //parse any incoming req.body to be readable
 app.use(bodyParser.json());
-// Make error messages more user friendly
-app.use(expressValidator);
 // Call upon Routes and Controllers
 app.use('/', postRoutes);
 //
