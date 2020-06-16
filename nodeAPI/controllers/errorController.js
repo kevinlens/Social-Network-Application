@@ -11,12 +11,19 @@ const sendErrorDev = (err, res) => {
 
 //If User Input Validation Error Occurs
 const handleValidationErrorDB = (err, res) => {
-  //turns object into an array using Object.value() and store it there
+  //turns object into an array using Object.value() to be able to use map(loop through it)
+  //err.errors is an object of errors
+  //for every error(element) in err.errors(now turned into an array), output the error message(element.message)
+  /*Should in the end create an array from the converted object to something like this 
+    [ 'Title must be between 4 to 150 characters',
+      'Body must be between 4 to 2000 characters' ]
+  */
   const errors = Object.values(err.errors).map(
     (element) => element.message
   );
 
-  const message = errors.join('. ');
+  //const message = errors.join('. ');
+  const message = errors;
 
   res.status(err.statusCode).json({
     error: message,
