@@ -1,19 +1,15 @@
 //Pretty much a mongoose method that we configured to be reused
+//Also this connects to the Database
 const Post = require('../models/postModel');
 const catchAsync = require('../utilities/catchAsync');
 
-exports.getPosts = (req, res) => {
-  res.json({
-    posts: [
-      {
-        title: 'First post',
-      },
-      {
-        title: 'Second post',
-      },
-    ],
+exports.getPosts = catchAsync(async (req, res) => {
+  //the .select() removes that specific output item from the .find()
+  const posts = await Post.find().select('-__v');
+  res.status(200).json({
+    posts,
   });
-};
+});
 
 exports.createPost = catchAsync(async (req, res) => {
   //create a new post from post model
