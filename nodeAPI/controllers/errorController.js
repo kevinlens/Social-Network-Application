@@ -1,6 +1,4 @@
-const AppError = require('../utilities/appError');
-
-// DEVELOPMENT PRODUCTION
+// DEVELOPMENT PRODUCTION: For developers
 const sendErrorDev = (err, res) => {
   //pass in the error statusCode (e.g 404, 400, 200, ect)
   res.status(err.statusCode).json({
@@ -11,6 +9,7 @@ const sendErrorDev = (err, res) => {
   });
 };
 
+//If User Input Validation Error Occurs
 const handleValidationErrorDB = (err, res) => {
   //turns object into an array using Object.value() and store it there
   const errors = Object.values(err.errors).map(
@@ -24,7 +23,7 @@ const handleValidationErrorDB = (err, res) => {
   });
 };
 
-//PRODUCTION ERROR FOR USER
+//UNDENTIFIED PRODUCTION ERROR FOR USER
 const sendErrorProd = (err, res) => {
   //user friendly error to client, operational error like wrong routing ect
   if (err.isOperational) {
@@ -46,20 +45,31 @@ const sendErrorProd = (err, res) => {
   }
 };
 
+//
+
+//
+
+//
+
+//
+
+//
+
 //This is the global error handler that is referred to from the app.js
 //By default all errors go here
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
+  //If we are in development then we need as much info as possible
   if (process.env.NODE_ENV === 'development') {
     //
     sendErrorDev(err, res);
     //
   } else if (process.env.NODE_ENV === 'production') {
-    //
+    //If its a user input validation error then....
     if (err.name === 'ValidationError') {
-      err = handleValidationErrorDB(err, res);
+      handleValidationErrorDB(err, res);
     } else {
       sendErrorProd(err, res);
     }
