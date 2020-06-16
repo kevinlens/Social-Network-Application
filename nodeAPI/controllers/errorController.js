@@ -17,13 +17,33 @@ const handleValidationErrorDB = (err, res) => {
     (element) => element.message
   );
 
-  const message = `Invalid input data. ${errors.join(
-    '. '
-  )}`;
+  const message = errors.join('. ');
 
   res.status(err.statusCode).json({
     error: message,
   });
+};
+
+//PRODUCTION ERROR FOR USER
+const sendErrorProd = (err, res) => {
+  //user friendly error to client, operational error like wrong routing ect
+  if (err.isOperational) {
+    res.status(err.statusCode).json({
+      status: err.status,
+      message: err.message,
+    });
+
+    //for programmer, dont leak error detail to user
+  } else {
+    // 1) Log error
+    console.error('ERROR 💥', err);
+
+    //2)Generic message
+    res.status(500).json({
+      status: 'error',
+      message: 'Something went very wrong',
+    });
+  }
 };
 
 //This is the global error handler that is referred to from the app.js
@@ -32,9 +52,17 @@ module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
-  if (err.name === 'ValidationError') {
-    err = handleValidationErrorDB(err, res);
-  } else {
+  if (process.env.NODE_ENV === 'development') {
+    //
     sendErrorDev(err, res);
+    //
+  } else if (process.env.NODE_ENV === 'production') {
+    //
+    if (err.name === 'ValidationError') {
+      err = handleValidationErrorDB(err, res);
+    } else {
+      sendErrorProd(err, res);
+    }
+    //
   }
 };
