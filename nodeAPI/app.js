@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const globalErrorHandler = require('./controllers/errorController');
@@ -42,6 +43,7 @@ const authRoutes = require('./routes/authRoute');
 app.use(morgan('dev'));
 //parse any incoming req.body to be readable
 app.use(bodyParser.json());
+app.user(cookieParser());
 // Call upon Routes and Controllers
 app.use('/', postRoutes);
 app.use('/', authRoutes);

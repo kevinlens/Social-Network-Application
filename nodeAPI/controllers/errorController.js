@@ -9,18 +9,21 @@ const sendErrorDev = (err, res) => {
   });
 };
 
-//DUPLICATE USER INPUT
+//DUPLICATE USER INPUT ERROR
 const handleDuplicateFieldsDB = (err, res) => {
   //Regular Expression: to find the users error causing email
   const value = err.errmsg.match(
     /(["'])(?:(?=(\\?))\2.)*?\1/
   )[0];
-  console.log(value);
   const message = `Duplicate field value: ${value}. Please use another value!`;
+  console.log(value);
+  console.log(message);
   res.status(400).json({
     message,
   });
 };
+
+//
 
 //USER INPUT VALIDATION ERROR FOR FIELDS
 const handleValidationErrorDB = (err, res) => {
@@ -42,6 +45,8 @@ const handleValidationErrorDB = (err, res) => {
     error: message,
   });
 };
+
+//
 
 //UNDENTIFIED PRODUCTION ERROR FOR USER
 const sendErrorProd = (err, res) => {
