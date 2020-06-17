@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
       8,
       'Password length must be 8 characters or more',
     ],
+    /*Makes sure password is never outputted to user through 
+    getAllUsers or getUsers, its a security feature*/
+    select: false,
   },
   passwordConfirm: {
     type: String,
@@ -61,6 +64,9 @@ const userSchema = new mongoose.Schema({
 //invoke this function 'pre' before, 'save' saving the data to the database
 //
 //ENCRYPT USER PASSWORD
+/*Note: The reason why we don't use catchAsync for these middleware
+is because is the catchAsync function is only meant for Express Route
+Handlers and are not pointing to our Schema document to begin with*/
 userSchema.pre('save', async function (next) {
   /*If password is not modified(empty password  string or not updated) then call next() middleware, else if it is
   modified(meaning a newly created document, with users password, or updated) 
@@ -73,5 +79,29 @@ userSchema.pre('save', async function (next) {
   this.passwordConfirm = undefined;
   next();
 });
+
+//
+
+//
+
+//INSTANCE METHODS (could be used in all documents of a collection)
+
+/*The 'correctPassword' Instance Method is created by you 
+in the UserSchema to ready to be used anytime in your controller*/
+/*Note: The reason why we don't use catchAsync for these middleware
+is because is the catchAsync function is only meant for Express Route
+Handlers and are not pointing to our Schema document to begin with*/
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  /* We cannot compare the users password and users database
+  password manually because one of them is encrypted, therefore
+  you would need the bcrypt tool "bcrypt.compare()"*/
+  return await bcrypt.compare(
+    candidatePassword,
+    userPassword
+  );
+};
 
 module.exports = mongoose.model('User', userSchema);

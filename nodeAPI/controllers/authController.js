@@ -61,7 +61,21 @@ const createSendToken = (user, statusCode, res) => {
 
 //
 
-exports.signup = catchAsync(async (req, res) => {
+exports.getUsers = catchAsync(
+  async (req, res, next) => {
+    const users = await User.find();
+
+    res.status(200).json({
+      status: 'success',
+      results: users.length,
+      data: {
+        users,
+      },
+    });
+  }
+);
+
+exports.signup = catchAsync(async (req, res, next) => {
   //   const userExist = await User.findOne({
   //     email: req.body.email,
   //   });
@@ -69,6 +83,12 @@ exports.signup = catchAsync(async (req, res) => {
   //     return res.status(403).json({
   //       error: 'Email is already taken!',
   //     });
+
+  //
+
+  /*You can't remove the user password from being outputted to 
+  user(like getAll and signup) so you must do it in the Schema
+  with select: false*/
   await User.create({
     name: req.body.name,
     email: req.body.email,
@@ -85,7 +105,7 @@ exports.signup = catchAsync(async (req, res) => {
 
 //
 
-exports.signin = catchAsync(async (req, res) => {
+exports.signin = catchAsync(async (req, res, next) => {
   //find user based on email
   const { email, password } = req.body;
 
@@ -94,8 +114,11 @@ exports.signin = catchAsync(async (req, res) => {
       error: 'Please provide email and password!',
     });
   //find entire user account data, using search query of email
-  const user = await User.findOne(email);
-
+  const user = await User.findOne({ email }).select(
+    '+password'
+  );
+  /*The 'correctPassword' Instance Method is created by you 
+  in the UserSchema ready to be used anytime */
   if (
     !user ||
     !(await user.correctPassword(

@@ -58,6 +58,9 @@ app.use('/', authRoutes);
 
 /*Global Error Handler for all the failed and rejected 
 CatchAsync() promises that were passed down and all other types of errors*/
+/*Note: The reason why we don't use catchAsync for some middleware
+is because is the catchAsync function is only meant for Express Route
+Handlers and are not pointing to our Schema document to begin with*/
 app.use(globalErrorHandler);
 
 //
