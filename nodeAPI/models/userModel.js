@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const catchAsync = require('../utilities/catchAsync');
 
 const userSchema = new mongoose.Schema({
   name: {

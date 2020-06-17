@@ -43,7 +43,7 @@ const authRoutes = require('./routes/authRoute');
 app.use(morgan('dev'));
 //parse any incoming req.body to be readable
 app.use(bodyParser.json());
-app.user(cookieParser());
+app.use(cookieParser());
 // Call upon Routes and Controllers
 app.use('/', postRoutes);
 app.use('/', authRoutes);
