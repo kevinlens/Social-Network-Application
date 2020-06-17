@@ -42,16 +42,15 @@ const createSendToken = (user, statusCode, res) => {
   res.cookie('jwt', token, cookieOptions);
 
   //
-
+  /*Once the password is stored in Database we remove it in the
+  document and send the rest of the document data to user*/
   user.password = undefined;
 
   //this is what you ONLY return back to user in JSON file
   res.status(statusCode).json({
     status: 'Success',
     token,
-    data: {
-      user,
-    },
+    user,
   });
 };
 
@@ -135,3 +134,13 @@ exports.signin = catchAsync(async (req, res, next) => {
 
   //return response containing user token to frontend client
 });
+
+//
+
+//To signout we have to clear the cookie
+exports.signout = (req, res) => {
+  res.clearCookie('jwt');
+  return res
+    .status(200)
+    .json({ message: 'Signout Successful!' });
+};
