@@ -22,10 +22,23 @@ exports.signup = catchAsync(async (req, res) => {
   });
 });
 
-exports.signin = (req, res) => {
+exports.signin = catchAsync(async (req, res) => {
   //find user based on email
-  //if user exist, authenticate
+  const { email, password } = req.body;
+
+  if (!email || !password)
+    return res.status(400).json({
+      error: 'Please provide email and password!',
+    });
+  //find entire user account data, using search query of email
+  const user = await User.findOne(email);
+
+  if(!user || !(await user.correctPassword(password, user.password)){
+    return res.status(401).json({
+      error: 'Incorrect email or password! Please try again.'
+    })
+  })
   //generate token with user Id( from database) and secret(from server, in this case vsCode)
   //persist the token as 't' in cookie, with expiration date
   //return response containing user token to frontend client
-};
+});

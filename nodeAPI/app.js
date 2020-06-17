@@ -56,7 +56,8 @@ app.use('/', authRoutes);
 
 //
 
-//Global Error Handler for all the failed CatchAsync() promises that were passed down
+/*Global Error Handler for all the failed and rejected 
+CatchAsync() promises that were passed down and all other types of errors*/
 app.use(globalErrorHandler);
 
 //
