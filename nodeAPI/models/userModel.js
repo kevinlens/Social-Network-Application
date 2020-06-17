@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
     //removes spaces from username
     trim: true,
     required: [true, 'Please provide us your email'],
-    unique: true,
+    unique: [true, 'Email is already in use!'],
     lowercase: true,
     validate: [
       validator.isEmail,
@@ -62,23 +62,17 @@ const userSchema = new mongoose.Schema({
 //invoke this function 'pre' before, 'save' saving the data to the database
 //
 //ENCRYPT USER PASSWORD
-userSchema.pre(
-  'save',
-  catchAsync(async function (next) {
-    /*If password is not modified(empty password  string or not updated) then call next() middleware, else if it is
+userSchema.pre('save', async function (next) {
+  /*If password is not modified(empty password  string or not updated) then call next() middleware, else if it is
   modified(meaning a newly created document, with users password, or updated) 
   then encrypt the new password*/
-    if (!this.isModified('password')) return next();
-    //encrypt password with cost of 12
-    this.password = await bcrypt.hash(
-      this.password,
-      12
-    );
-    //delete password field
-    //this works because the password is only a required INPUT not required data to be pushed to database
-    this.passwordConfirm = undefined;
-    next();
-  })
-);
+  if (!this.isModified('password')) return next();
+  //encrypt password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
+  //delete password field
+  //this works because the password is only a required INPUT not required data to be pushed to database
+  this.passwordConfirm = undefined;
+  next();
+});
 
 module.exports = mongoose.model('User', userSchema);

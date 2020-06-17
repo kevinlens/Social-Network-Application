@@ -9,7 +9,20 @@ const sendErrorDev = (err, res) => {
   });
 };
 
-//If User Input Validation Error Occurs
+//DUPLICATE USER INPUT
+const handleDuplicateFieldsDB = (err, res) => {
+  //Regular Expression: to find the users error causing email
+  const value = err.errmsg.match(
+    /(["'])(?:(?=(\\?))\2.)*?\1/
+  )[0];
+  console.log(value);
+  const message = `Duplicate field value: ${value}. Please use another value!`;
+  res.status(400).json({
+    message,
+  });
+};
+
+//USER INPUT VALIDATION ERROR FOR FIELDS
 const handleValidationErrorDB = (err, res) => {
   //turns object into an array using Object.value() to be able to use map(loop through it)
   //err.errors is an object of errors
@@ -74,6 +87,9 @@ module.exports = (err, req, res, next) => {
     sendErrorDev(err, res);
     //
   } else if (process.env.NODE_ENV === 'production') {
+    //if user input is a duplicate error(like email duplicate)
+    if (err.code === 11000)
+      err = handleDuplicateFieldsDB(err, res);
     //If its a user input validation error then....
     if (err.name === 'ValidationError') {
       handleValidationErrorDB(err, res);
