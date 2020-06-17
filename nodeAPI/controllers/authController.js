@@ -37,7 +37,7 @@ exports.signin = catchAsync(async (req, res) => {
     return res.status(401).json({
       error: 'Incorrect email or password! Please try again.'
     })
-  })
+  }
   //generate token with user Id( from database) and secret(from server, in this case vsCode)
   //persist the token as 't' in cookie, with expiration date
   //return response containing user token to frontend client
