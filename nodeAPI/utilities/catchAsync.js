@@ -1,3 +1,6 @@
+//
+//CatchAsync is handle rejected promises
+//
 //fn stands for function(The function to which we would pass in)
 module.exports = (fn) => {
   //returns a function that could be called for later rather than be used ASAP

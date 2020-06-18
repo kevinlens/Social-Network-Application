@@ -44,6 +44,7 @@ const userSchema = new mongoose.Schema({
       message: 'Passwords are not the same!',
     },
   },
+  passwordChangedAt: Date,
   //When account was made
   created: {
     type: Date,
@@ -95,6 +96,7 @@ userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
 ) {
+  //
   /* We cannot compare the users password and users database
   password manually because one of them is encrypted, therefore
   you would need the bcrypt tool "bcrypt.compare()"*/
@@ -102,6 +104,28 @@ userSchema.methods.correctPassword = async function (
     candidatePassword,
     userPassword
   );
+  //
+};
+
+userSchema.methods.changedPasswordAfter = function (
+  JWTTimestamp
+) {
+  //
+  if (this.passwordChangedAt) {
+    /* simple formula that turns the date into readable iat, 
+    this is the initial data sent to the database */
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.timeTime() / 1000,
+      10
+    );
+    //
+    // console.log(changedTimestamp, JWTTimestamp);
+    //Should return true or false
+    return JWTTimestamp < changedTimestamp;
+  }
+  //false means password not changed
+  return false;
+  //
 };
 
 module.exports = mongoose.model('User', userSchema);
