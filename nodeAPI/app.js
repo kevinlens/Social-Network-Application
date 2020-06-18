@@ -37,7 +37,7 @@ mongoose.connection.on('error', (err) => {
 // Brings in Routes
 const postRoutes = require('./routes/postRoute');
 const authRoutes = require('./routes/authRoute');
-
+const userRoutes = require('./routes/userRoute');
 //Whenever you do app.use, the 'use' tells you that its a middleware
 // Middleware that outputs time it took to complete task
 app.use(morgan('dev'));
@@ -47,6 +47,7 @@ app.use(cookieParser());
 // Call upon Routes and Controllers
 app.use('/', postRoutes);
 app.use('/', authRoutes);
+app.use('/', userRoutes);
 
 //
 

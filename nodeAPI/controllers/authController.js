@@ -61,21 +61,6 @@ const createSendToken = (user, statusCode, res) => {
 
 //
 
-//
-
-exports.getUsers = catchAsync(
-  async (req, res, next) => {
-    const users = await User.find();
-
-    res.status(200).json({
-      status: 'success',
-      results: users.length,
-      data: {
-        users,
-      },
-    });
-  }
-);
 
 exports.signup = catchAsync(async (req, res, next) => {
   //   const userExist = await User.findOne({
