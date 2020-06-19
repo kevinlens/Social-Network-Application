@@ -5,17 +5,13 @@ const userController = require('../controllers/userController');
 
 const router = express.Router();
 
-router.get(
-  '/getUsers',
-  authController.protect,
-  userController.getUsers
-);
+//ANYTHING that comes AFTER this point will have this middleware applied
+router.use(authController.protect);
+//ANYTHING that comes AFTER this point will have this middleware applied
+
+router.get('/users', userController.getUsers);
 
 //get user based on ID
-router.get(
-  '/:id',
-  authController.protect,
-  userController.getUserById
-);
+router.get('/users/:id', userController.getUserById);
 
 module.exports = router;

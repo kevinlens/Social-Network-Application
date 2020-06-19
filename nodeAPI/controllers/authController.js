@@ -61,7 +61,6 @@ const createSendToken = (user, statusCode, res) => {
 
 //
 
-
 exports.signup = catchAsync(async (req, res, next) => {
   //   const userExist = await User.findOne({
   //     email: req.body.email,
