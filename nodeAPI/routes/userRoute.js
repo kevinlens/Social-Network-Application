@@ -20,9 +20,10 @@ router.get(
   userController.getMe,
   userController.getUser
 );
+
 //user are allowed to update name and email
 router.patch(
-  '/updateAccount',
+  '/users/updateAccount',
   userController.updateAccount
 );
 
