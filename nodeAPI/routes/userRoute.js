@@ -32,4 +32,17 @@ router.delete(
   userController.deleteAccount
 );
 
+//
+
+//ANYTHING that comes AFTER this point will have this middleware applied
+router.use(authController.restrictTo('admin'));
+//ANYTHING that comes AFTER this point will have this middleware applied
+
+//
+
+router
+  .route('/:id')
+  .get(userController.getUser)
+  .patch(userController.updateUser);
+
 module.exports = router;

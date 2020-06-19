@@ -219,3 +219,21 @@ exports.protect = catchAsync(
   }
 );
 
+/*this always creates an array when you do the '...roles' from the parameter,
+and RESTRICT access only to specific roles*/
+// e.g: [roles1, roles2]
+exports.restrictTo = (...roles) => {
+  //returns this middleware function which has access to the '...roles' parameter
+  return (req, res, next) => {
+    // roles ['admin', 'lead-guide'], if req.user.role="user" then you don't have permission
+    /*for more info about 'req.user' take a look at authController
+   .protect() function*/
+    if (!roles.includes(req.user.role)) {
+      res.status(403).json({
+        message:
+          'You do not have permission to perform this action',
+      });
+    }
+    next();
+  };
+};

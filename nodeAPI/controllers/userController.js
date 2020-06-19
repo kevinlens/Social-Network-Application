@@ -125,3 +125,30 @@ exports.getUsers = catchAsync(
     });
   }
 );
+
+exports.updateUser = catchAsync(
+  async (req, res, next) => {
+    const doc = await User.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        //this states that the document is new
+        new: true,
+        runValidators: true,
+      }
+    );
+    //
+    if (!doc) {
+      res.status(404).json({
+        message: 'No document found with that ID',
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: doc,
+      },
+    });
+  }
+);
