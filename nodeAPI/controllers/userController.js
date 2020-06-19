@@ -112,6 +112,9 @@ exports.deleteAccount = catchAsync(
   }
 );
 
+//-----------------------------------------------------------
+//---------------------ADMIN ONLY--------------------------
+
 exports.getUsers = catchAsync(
   async (req, res, next) => {
     const users = await User.find().select('-__v');
@@ -149,6 +152,25 @@ exports.updateUser = catchAsync(
       data: {
         data: doc,
       },
+    });
+  }
+);
+
+exports.deleteUser = catchAsync(
+  async (req, res, next) => {
+    const doc = await User.findByIdAndDelete(
+      req.params.id
+    );
+
+    if (!doc) {
+      res.status(404).json({
+        message: 'No document found with that ID',
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Account has been deleted',
     });
   }
 );
