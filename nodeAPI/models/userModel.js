@@ -21,6 +21,12 @@ const userSchema = new mongoose.Schema({
       'Please provide a valid email',
     ],
   },
+  //To become admin you have to change it directly in the DB
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user',
+  },
   password: {
     type: String,
     required: [true, 'Please provide a password'],

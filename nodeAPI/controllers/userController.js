@@ -18,6 +18,8 @@ const filterObj = (obj, ...allowedFields) => {
 exports.getMe = (req, res, next) => {
   //If you are logged then req.user.id should already be available
   //set the params id up so you dont have to manually add it
+  /*for more info about 'req.user' take a look at authController
+  .protect() function*/
   req.params.id = req.user.id;
   next();
 };
@@ -66,6 +68,8 @@ exports.updateAccount = catchAsync(
     //
     //update user info with adjusted object properties
     const updatedUser = await User.findByIdAndUpdate(
+      /*for more info about 'req.user' take a look at authController
+      .protect() function*/
       req.user.id,
       filteredBody,
       {
@@ -90,8 +94,9 @@ exports.deleteAccount = catchAsync(
     the email could be reused but the former email data belonging to
     the account never gets lost*/
     const random = Math.random().toString();
-    const user = await User.findById(req.user.id);
-    const userEmail = user.email.concat(random);
+    /*for more info about 'req.user' take a look at authController
+    .protect() function*/
+    const userEmail = req.user.email.concat(random);
     /* Note: By setting it to 'active: false', in order to query and 
     getAll() users with ONLY 'active: true' you have to already
     set it to '.find({active: true})', in your User.Schema Mode*/

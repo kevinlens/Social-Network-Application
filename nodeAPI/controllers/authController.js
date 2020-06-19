@@ -7,6 +7,11 @@ const catchAsync = require('../utilities/catchAsync');
 const signToken = (id) => {
   //signing a signature token, creates new token based on these mixes of arguments passed in
   //generate token with user Id( from database) and secret(from server, in this case vsCode)
+  /*Token will be generated based on user info, if it were to be sent back to server
+  and somehow the secret has been changed then it will know because it also 
+  has its own secret stored in the server which could not be changed.
+  e.g would be someone trying to change user--> admin, but in order
+  to do that you also have to change the servers SECRET*/
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
@@ -205,7 +210,12 @@ exports.protect = catchAsync(
     //
     //If none of the above is true, then grant access to protected route down below
     //setting user to id for later use
+    /*This is important because it sets up the user info for the 
+    rest of the express application without having to get the user
+    by id over and over. It is so that you can use the currently 
+    logged in user's info*/
     req.user = currentUser;
     next();
   }
 );
+
