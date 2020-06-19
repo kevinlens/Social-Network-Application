@@ -84,6 +84,29 @@ exports.updateAccount = catchAsync(
   }
 );
 
+exports.deleteAccount = catchAsync(
+  async (req, res, next) => {
+    /*Here I am trying make it so that one the account has been disabled
+    the email could be reused but the former email data belonging to
+    the account never gets lost*/
+    const random = Math.random().toString();
+    const user = await User.findById(req.user.id);
+    const userEmail = user.email.concat(random);
+    /* Note: By setting it to 'active: false', in order to query and 
+    getAll() users with ONLY 'active: true' you have to already
+    set it to '.find({active: true})', in your User.Schema Mode*/
+    await User.findByIdAndUpdate(req.user.id, {
+      active: false,
+      email: userEmail,
+    });
+    res.clearCookie('jwt');
+    res.status(200).json({
+      status: 'success',
+      message: 'Account has been removed',
+    });
+  }
+);
+
 exports.getUsers = catchAsync(
   async (req, res, next) => {
     const users = await User.find().select('-__v');

@@ -52,6 +52,13 @@ const userSchema = new mongoose.Schema({
   },
   //When account info was updated
   updated: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    /*Makes sure 'active' property is never outputted to user through 
+    getAllUsers or getUsers*/
+    select: false,
+  },
 });
 //
 
@@ -78,6 +85,13 @@ userSchema.pre('save', async function (next) {
   //delete password field
   //this works because the password is only a required INPUT not required data to be pushed to database
   this.passwordConfirm = undefined;
+  next();
+});
+
+userSchema.pre(/^find/, function (next) {
+  /*whether or not its find one or more users, only find 
+  ones with 'active: true'*/
+  this.find({ active: true });
   next();
 });
 
