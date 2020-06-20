@@ -5,9 +5,13 @@ const userController = require('../controllers/userController');
 
 const router = express.Router();
 
+//
+
 //ANYTHING that comes AFTER this point will have this middleware applied
 router.use(authController.protect);
 //ANYTHING that comes AFTER this point will have this middleware applied
+
+//
 
 //get all user along with their info
 router.get('/users', userController.getUsers);
