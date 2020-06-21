@@ -20,6 +20,8 @@ exports.getPosts = catchAsync(
 exports.createPost = (req, res, next) => {
   /*-----------------------------------*/
 
+  /*When you are using form data like this one you have to 
+  go in Postman and use 'x-www-form-urlencoded' instead 'raw'*/
   //formidable package method that will give us form fields
   const form = new formidable.IncomingForm();
 
@@ -43,10 +45,8 @@ exports.createPost = (req, res, next) => {
       //assign it to the photo type like jpg or png
       post.photo.contentType = files.photos.type;
     }
+
     // save newly created post to database
-    /*the reason why we aren't using 'await' post.save() here is
-      because the fs.readFileSync is synchronous, 
-      'await' is only valid in async function*/
     post.save((err, result) => {
       if (err) {
         return res.status(400).json({
