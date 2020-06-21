@@ -31,6 +31,7 @@ exports.createPost = (req, res) => {
   //
 
   //
+  //we are not using catchAsync, therefore the 'err' parameter is there
   //parsing so that the 'form' method is able to read it
   form.parse(req, (err, fields, files) => {
     //the fields is the form data sent in from user
@@ -42,12 +43,13 @@ exports.createPost = (req, res) => {
       });
     }
     if (
-      !title ||
-      (!title.length > 4 && !title.length < 150)
+      !title.value ||
+      (!title.value.length > 4 &&
+        !title.value.length < 150)
     ) {
       return res.status(400).json({
         error:
-          'Please makes there is a title and that it is between 4 to 150 characters',
+          'Please make sure there is a title and that it is between 4 to 150 characters',
       });
     }
 
@@ -57,7 +59,7 @@ exports.createPost = (req, res) => {
     ) {
       return res.status(400).json({
         error:
-          'Please makes there is a body and that it is between 4 to 2000 characters',
+          'Please make sure there is a body and that it is between 4 to 2000 characters',
       });
     }
 
