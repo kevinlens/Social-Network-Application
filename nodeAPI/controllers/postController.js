@@ -17,19 +17,50 @@ exports.getPosts = catchAsync(
   }
 );
 
-exports.createPost = (req, res, next) => {
-  /*-----------------------------------*/
-
+exports.createPost = (req, res) => {
   /*When you are using form data like this one you have to 
   go in Postman and use 'x-www-form-urlencoded' instead 'raw'*/
   //formidable package method that will give us form fields
+  // Conventionally people use this to upload files (like Images,Audios,etc )
   const form = new formidable.IncomingForm();
 
   /*tells the form to keep the file upload's in its format of jpeg,png,ect */
   form.keepExtensions = true;
+  //
 
+  //
+
+  //
   //parsing so that the 'form' method is able to read it
-  form.parse(req, (fields, files) => {
+  form.parse(req, (err, fields, files) => {
+    //the fields is the form data sent in from user
+    const { title, body } = fields;
+
+    if (err) {
+      return res.status(400).json({
+        error: 'Image could not upload',
+      });
+    }
+    if (
+      !title ||
+      (!title.length > 4 && !title.length < 150)
+    ) {
+      return res.status(400).json({
+        error:
+          'Please makes there is a title and that it is between 4 to 150 characters',
+      });
+    }
+
+    if (
+      !body ||
+      (!body.length > 4 && !body.length < 2000)
+    ) {
+      return res.status(400).json({
+        error:
+          'Please makes there is a body and that it is between 4 to 2000 characters',
+      });
+    }
+
     //create a new post from post model
     //pass in the users 'fields' to create a new post
     const post = new Post(fields);
@@ -47,10 +78,10 @@ exports.createPost = (req, res, next) => {
     }
 
     // save newly created post to database
-    post.save((err, result) => {
-      if (err) {
+    post.save((errs, result) => {
+      if (errs) {
         return res.status(400).json({
-          error: err,
+          error: errs,
         });
       }
       res.status(200).json({

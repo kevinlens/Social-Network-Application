@@ -16,8 +16,8 @@ const handleDuplicateFieldsDB = (err, res) => {
     /(["'])(?:(?=(\\?))\2.)*?\1/
   )[0];
   const message = `Duplicate field value: ${value}. Please use another value!`;
-  console.log(value);
-  console.log(message);
+  // console.log(value);
+  // console.log(message);
   res.status(400).json({
     message,
   });
