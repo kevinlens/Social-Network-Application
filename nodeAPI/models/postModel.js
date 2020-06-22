@@ -62,4 +62,9 @@ postSchema.pre(/^find/, function (next) {
 //The name we give it as first argument and schema as second argument
 module.exports = mongoose.model('Post', postSchema);
 
-exports.postsByUser = (req, res) => {};
+exports.postsByUser = (req, res) => {
+  Post.find({ postedBy: req.profile._id }).populate(
+    'postedBy',
+    '_id name'
+  );
+};
