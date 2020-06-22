@@ -43,5 +43,21 @@ const postSchema = new mongoose.Schema({
   },
 });
 
+//DOCUMENT MIDDLEWARE, 'post' means to happen after saving the document
+// tourSchema.post('save', function (doc, next) {});
+
+//Before ANY 'find' query is invoke, eg.Tour.findById(), do this
+postSchema.pre(/^find/, function (next) {
+  //'guides' property of Schema
+  this.populate({
+    path: 'postedBy',
+    select: '-__v',
+  });
+
+  next();
+});
+
+//
+
 //The name we give it as first argument and schema as second argument
 module.exports = mongoose.model('Post', postSchema);
