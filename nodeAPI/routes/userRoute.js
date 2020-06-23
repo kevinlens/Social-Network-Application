@@ -14,25 +14,25 @@ router.use(authController.protect);
 //
 
 //get all user along with their info
-router.get('/users', userController.getUsers);
+router.get('/', userController.getUsers);
 
 //set params ID to current logged in user's Id so they don't have to do it manually
 //get user along with their info based on params ID and send it back
 //user use this info to see what they would like to update
 router.get(
-  '/users/myAccount',
+  '/myAccount',
   userController.getMe,
   userController.getUser
 );
 
 //user are allowed to update name and email
 router.patch(
-  '/users/updateAccount',
+  '/updateAccount',
   userController.updateAccount
 );
 
 router.delete(
-  '/users/deleteAccount',
+  '/deleteAccount',
   userController.deleteAccount
 );
 

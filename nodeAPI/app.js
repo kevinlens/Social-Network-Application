@@ -45,9 +45,9 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 // Call upon Routes and Controllers
-app.use('/', postRoutes);
-app.use('/', authRoutes);
-app.use('/', userRoutes);
+app.use('/posts', postRoutes);
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
 
 //
 

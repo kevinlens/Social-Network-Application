@@ -8,9 +8,15 @@ const router = express.Router();
 router.get('/', postController.getPosts);
 
 router.post(
-  '/post',
+  '/createPost',
   authController.protect,
   postController.createPost
 );
+
+router
+  .route('/:id')
+  .get(postController.getPost)
+  .patch(postController.updatePost)
+  .delete(postController.deletePost);
 
 module.exports = router;

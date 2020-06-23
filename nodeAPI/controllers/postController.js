@@ -10,7 +10,8 @@ const catchAsync = require('../utilities/catchAsync');
 exports.getPosts = catchAsync(
   async (req, res, next) => {
     //the .select() removes that specific output item from the .find()
-    const posts = await Post.find().select('-__v');
+    //no need to add much here as it has already been done for us in the postModel
+    const posts = await Post.find();
     res.status(200).json({
       posts,
     });
@@ -73,3 +74,32 @@ exports.createPost = (req, res, next) => {
     //
   });
 };
+
+//========================================================
+
+exports.getPost = catchAsync(
+  async (req, res, next) => {
+    const posts = await Post.find(req.params.id);
+    req.post = posts;
+    //
+    next();
+  }
+);
+
+exports.updatePost = catchAsync(
+  async (req, res, next) => {
+    const posts = await Post.find(req.params.id);
+    req.post = posts;
+    //
+    next();
+  }
+);
+
+exports.deletePost = catchAsync(
+  async (req, res, next) => {
+    const posts = await Post.find(req.params.id);
+    req.post = posts;
+    //
+    next();
+  }
+);
