@@ -75,9 +75,22 @@ exports.createPost = (req, res, next) => {
   });
 };
 
-//========================================================
+//=========================================================
 
-exports.getPost = catchAsync(
+exports.getMyPosts = catchAsync(
+  async (req, res, next) => {
+    const posts = await Post.find({
+      postedBy: req.params.id,
+    });
+    res.json({
+      posts,
+    });
+    //
+    // next();
+  }
+);
+
+exports.updateMyPost = catchAsync(
   async (req, res, next) => {
     const posts = await Post.find(req.params.id);
     req.post = posts;
@@ -86,7 +99,7 @@ exports.getPost = catchAsync(
   }
 );
 
-exports.updatePost = catchAsync(
+exports.deleteMyPost = catchAsync(
   async (req, res, next) => {
     const posts = await Post.find(req.params.id);
     req.post = posts;
@@ -95,7 +108,27 @@ exports.updatePost = catchAsync(
   }
 );
 
-exports.deletePost = catchAsync(
+//=======================ADMIN==============================
+
+exports.getUsersPost = catchAsync(
+  async (req, res, next) => {
+    const posts = await Post.find(req.params.id);
+    req.post = posts;
+    //
+    next();
+  }
+);
+
+exports.updateUsersPost = catchAsync(
+  async (req, res, next) => {
+    const posts = await Post.find(req.params.id);
+    req.post = posts;
+    //
+    next();
+  }
+);
+
+exports.deleteUsersPost = catchAsync(
   async (req, res, next) => {
     const posts = await Post.find(req.params.id);
     req.post = posts;
