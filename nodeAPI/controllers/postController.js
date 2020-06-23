@@ -7,6 +7,20 @@ const fs = require('fs');
 const Post = require('../models/postModel');
 const catchAsync = require('../utilities/catchAsync');
 
+const filterObj = (obj, ...allowedFields) => {
+  const newObj = {};
+  //If the users 'obj' req.body contain the required fields from the array 'allowedFields', then create new object that includes propertie name equal to field names
+  Object.keys(obj).forEach((el) => {
+    if (allowedFields.includes(el))
+      newObj[el] = obj[el];
+  });
+  //should return back an object with properties
+  return newObj;
+};
+
+//
+
+
 exports.getPosts = catchAsync(
   async (req, res, next) => {
     //the .select() removes that specific output item from the .find()
@@ -92,8 +106,8 @@ exports.updateMyPost = catchAsync(
   async (req, res, next) => {
     const filteredBody = filterObj(
       req.body,
-      'name',
-      'email'
+      'title',
+      'body'
     );
     const updatedPost = await Post.findByIdAndUpdate(
       req.user.id,
