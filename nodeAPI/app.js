@@ -41,9 +41,21 @@ const userRoutes = require('./routes/userRoute');
 //Whenever you do app.use, the 'use' tells you that its a middleware
 // Middleware that outputs time it took to complete task
 app.use(morgan('dev'));
-//parse any incoming req.body to be readable
+/*These body parser setup are essential for you, especially if you are 
+going to be using Postman to update, create, and get data. It's to work
+with form-data and Json format data in Postman*/
+//parse any incoming req.body to be readable and be updatable
 app.use(bodyParser.json());
 app.use(cookieParser());
+/*These body parser setup are essential for you, especially if you are 
+going to be using Postman to update, create, and get data. It's to work
+with form-data and Json format data in Postman*/
+//parse any incoming req.body to be readable and be updatable
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 // Call upon Routes and Controllers
 app.use('/posts', postRoutes);
 app.use('/auth', authRoutes);

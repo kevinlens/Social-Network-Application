@@ -108,6 +108,7 @@ exports.updateMyPost = catchAsync(
       'title',
       'body'
     );
+    console.log(req.body);
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.id,
       filteredBody,
