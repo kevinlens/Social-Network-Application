@@ -85,17 +85,29 @@ exports.getMyPosts = catchAsync(
     res.json({
       posts,
     });
-    //
-    // next();
   }
 );
 
 exports.updateMyPost = catchAsync(
   async (req, res, next) => {
-    const posts = await Post.find(req.params.id);
-    req.post = posts;
-    //
-    next();
+    const filteredBody = filterObj(
+      req.body,
+      'name',
+      'email'
+    );
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.user.id,
+      filteredBody,
+      {
+        //setting it as a "new" document
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    res.status(200).json({
+      post: updatedPost,
+    });
   }
 );
 
