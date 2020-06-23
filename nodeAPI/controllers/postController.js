@@ -108,7 +108,6 @@ exports.updateMyPost = catchAsync(
       'title',
       'body'
     );
-    console.log(req.body);
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.id,
       filteredBody,
@@ -127,10 +126,14 @@ exports.updateMyPost = catchAsync(
 
 exports.deleteMyPost = catchAsync(
   async (req, res, next) => {
-    const posts = await Post.find(req.params.id);
-    req.post = posts;
-    //
-    next();
+    await Post.findByIdAndUpdate(req.params.id, {
+      active: false,
+    });
+
+    res.status(204).json({
+      status: 'success',
+      message: 'account has been removed!',
+    });
   }
 );
 
@@ -138,27 +141,58 @@ exports.deleteMyPost = catchAsync(
 
 exports.getUsersPost = catchAsync(
   async (req, res, next) => {
-    const posts = await Post.find(req.params.id);
-    req.post = posts;
-    //
-    next();
+    console.log(req.params.id);
+    // const posts = await Post.find({_id:req.params.id});
+    const posts = await Post.findById(req.params.id);
+    console.log(posts);
+    res.json({
+      posts,
+    });
   }
 );
 
 exports.updateUsersPost = catchAsync(
   async (req, res, next) => {
-    const posts = await Post.find(req.params.id);
-    req.post = posts;
+    const doc = await Post.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        //this states that the document is new
+        new: true,
+        runValidators: true,
+      }
+    );
     //
-    next();
+    if (!doc) {
+      res.status(404).json({
+        message: 'No document found with that ID',
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: doc,
+      },
+    });
   }
 );
 
 exports.deleteUsersPost = catchAsync(
   async (req, res, next) => {
-    const posts = await Post.find(req.params.id);
-    req.post = posts;
-    //
-    next();
+    const doc = await Post.findByIdAndDelete(
+      req.params.id
+    );
+
+    if (!doc) {
+      res.status(404).json({
+        message: 'No document found with that ID',
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Account has been deleted',
+    });
   }
 );

@@ -37,6 +37,13 @@ const postSchema = new mongoose.Schema({
     //referencing the userModel, the name e.g "const User = mongoose.model('User', userSchema);" of the User Schema Model
     ref: 'User',
   },
+  active: {
+    type: Boolean,
+    default: true,
+    /*Makes sure 'active' property is never outputted to user through 
+    getAllUsers or getUsers*/
+    select: false,
+  },
   created: {
     type: Date,
     default: Date.now,
@@ -54,6 +61,8 @@ postSchema.pre(/^find/, function (next) {
     path: 'postedBy',
     select: '-__v -created -role -email',
   });
+
+  this.find({ active: true });
 
   next();
 });

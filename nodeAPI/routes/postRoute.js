@@ -8,11 +8,15 @@ const router = express.Router();
 
 router.get('/', postController.getPosts);
 
-router.post(
-  '/createPost',
-  authController.protect,
-  postController.createPost
-);
+//
+
+//ANYTHING that comes AFTER this point will have this middleware applied
+router.use(authController.protect);
+//ANYTHING that comes AFTER this point will have this middleware applied
+
+//
+
+router.post('/createPost', postController.createPost);
 
 //===============================
 
@@ -30,7 +34,7 @@ router.patch(
 );
 
 router.delete(
-  '/deleteMyPost',
+  '/deleteMyPost/:id',
   postController.deleteMyPost
 );
 
