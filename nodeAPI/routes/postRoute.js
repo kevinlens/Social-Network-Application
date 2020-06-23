@@ -25,7 +25,7 @@ router.get(
 
 //user are allowed to update name and email
 router.patch(
-  '/updateMyPost',
+  '/updateMyPost/:id',
   postController.updateMyPost
 );
 

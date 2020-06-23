@@ -20,7 +20,6 @@ const filterObj = (obj, ...allowedFields) => {
 
 //
 
-
 exports.getPosts = catchAsync(
   async (req, res, next) => {
     //the .select() removes that specific output item from the .find()
@@ -110,7 +109,7 @@ exports.updateMyPost = catchAsync(
       'body'
     );
     const updatedPost = await Post.findByIdAndUpdate(
-      req.user.id,
+      req.params.id,
       filteredBody,
       {
         //setting it as a "new" document
