@@ -108,9 +108,13 @@ exports.updateMyPost = catchAsync(
       'title',
       'body'
     );
+    //
+    const user = filteredBody;
+    user.updated_at = Date.now();
+
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.id,
-      filteredBody,
+      user,
       {
         //setting it as a "new" document
         new: true,

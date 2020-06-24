@@ -59,17 +59,11 @@ postSchema.pre(/^find/, function (next) {
     path: 'postedBy',
     select: '-__v -created -role -email',
   });
-  this.find({ active: true });
+  this.find({ active: true }).select('-__v');
   //
-  // const currentDate = new Date();
-  // this.updated_at = currentDate.now;
-  const now = new Date();
-  this.updated_at = now;
-  if (!this.created_at) {
-    this.created_at = now;
-  }
   next();
 });
+
 //When you create a new post this will set up the timestamp
 postSchema.pre('save', function (next) {
   const now = new Date();
