@@ -151,9 +151,12 @@ exports.getUsersPost = catchAsync(
 
 exports.updateUsersPost = catchAsync(
   async (req, res, next) => {
-    const doc = Post.findByIdAndUpdate(
+    const user = req.body;
+    user.updated_at = Date.now();
+    //
+    const doc = await Post.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      user,
       {
         //this states that the document is new
         new: true,
@@ -167,7 +170,7 @@ exports.updateUsersPost = catchAsync(
       });
     }
 
-    doc.updated_at = Date.now();
+    // doc.updated_at = Date.now();
 
     res.status(200).json({
       status: 'success',
