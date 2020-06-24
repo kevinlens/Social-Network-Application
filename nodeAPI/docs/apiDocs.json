@@ -1,0 +1,20 @@
+{
+  "/api": "api docs",
+
+  "/api/auth/signup": "signup",
+  "/api/auth/signin": "signin",
+  "/api/auth/signout": "signout",
+
+  "/api/users/": "get all users",
+  "/api/users/myAccount": "get my account info",
+  "/api/users/updateAccount": "update my account info",
+  "/api/users/deleteAccount": "remove my account info",
+  "/api/users/:id": "Admin: grab and update/delete any user",
+
+  "/api/posts": "get all posts",
+  "/api/posts/getMyPosts": "get all my posts",
+  "/api/posts/createPost": "create a post",
+  "/api/posts/updateMyPost/:id": "update my specific post",
+  "/api/posts/deleteMyPost/:id": "delete my specific psot",
+  "/api/posts/:id": "Admin: grab and update/delete any post"
+}

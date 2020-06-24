@@ -5,7 +5,10 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+//allow cross origin
+const cors = require('cors');
 const dotenv = require('dotenv');
+const fs = require('fs');
 const globalErrorHandler = require('./controllers/errorController');
 //enable .env file configuration
 dotenv.config();
@@ -47,11 +50,24 @@ with Json format data in Postman*/
 //parse any incoming req.body to be readable and be updatable
 app.use(bodyParser.json());
 app.use(cookieParser());
-
+app.use(cors());
 // Call upon Routes and Controllers
-app.use('/posts', postRoutes);
-app.use('/auth', authRoutes);
-app.use('/users', userRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+
+//apiDocs
+app.get('/api', (req, res) => {
+  fs.readFile('docs/apiDocs.json', (err, data) => {
+    if (err) {
+      res.status(400).json({
+        error: err,
+      });
+    }
+    const docs = JSON.parse(data);
+    res.json(docs);
+  });
+});
 
 //
 
