@@ -141,10 +141,8 @@ exports.deleteMyPost = catchAsync(
 
 exports.getUsersPost = catchAsync(
   async (req, res, next) => {
-    console.log(req.params.id);
     // const posts = await Post.find({_id:req.params.id});
     const posts = await Post.findById(req.params.id);
-    console.log(posts);
     res.json({
       posts,
     });
@@ -153,7 +151,7 @@ exports.getUsersPost = catchAsync(
 
 exports.updateUsersPost = catchAsync(
   async (req, res, next) => {
-    const doc = await Post.findByIdAndUpdate(
+    const doc = Post.findByIdAndUpdate(
       req.params.id,
       req.body,
       {
@@ -162,18 +160,18 @@ exports.updateUsersPost = catchAsync(
         runValidators: true,
       }
     );
-    //
+
     if (!doc) {
       res.status(404).json({
         message: 'No document found with that ID',
       });
     }
 
+    doc.updated_at = Date.now();
+
     res.status(200).json({
       status: 'success',
-      data: {
-        data: doc,
-      },
+      doc,
     });
   }
 );
