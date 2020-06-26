@@ -15,7 +15,7 @@ const handleDuplicateFieldsDB = (err, res) => {
   const value = err.errmsg.match(
     /(["'])(?:(?=(\\?))\2.)*?\1/
   )[0];
-  const message = `Duplicate field value: ${value}. Please use another value!`;
+  const message = ` ${value} is already taken, please try another!`;
   // console.log(value);
   // console.log(message);
   res.status(400).json({

@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
     //removes spaces from username
     trim: true,
     required: [true, 'Please provide us your email'],
-    unique: [true, 'Email is already in use!'],
+    unique: true,
     lowercase: true,
     validate: [
       validator.isEmail,

@@ -27,23 +27,35 @@ class Signup extends Component {
       password,
       passwordConfirm,
     };
-    this.signup(user);
-  }; 
+    this.signup(user).then((data) => {
+        console.log(data.error)
+        this.setState({ error: data.error });
+    //   else 
+    //     this.setState({
+    //       name: "",
+    //       email: "",
+    //       password: "",
+    //       passwordConfirm: "",
+    //       error: "",
+    //     });
 
-  signup = user =>{
-    fetch("http://localhost:8080/api/auth/signup", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
+    });
+  };
+
+  signup = (user) => {
+    return fetch("http://localhost:8080/api/auth/signup", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then((response) => {
+        return response.json;
       })
-        .then((response) => {
-          return response.json;
-        })
-        .catch((err) => console.log(err));
-  }
+      .catch((err) => console.log(err));
+  };
 
   render() {
     return (

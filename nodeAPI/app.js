@@ -55,7 +55,7 @@ app.use(cors());
 app.use('/api/posts', postRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
- 
+
 //apiDocs
 app.get('/api', (req, res) => {
   fs.readFile('docs/apiDocs.json', (err, data) => {
