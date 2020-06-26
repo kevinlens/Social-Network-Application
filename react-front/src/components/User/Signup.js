@@ -9,10 +9,12 @@ class Signup extends Component {
       password: "",
       passwordConfirm: "",
       error: "",
+      created: false,
     };
   }
 
   handleChange = (field) => (event) => {
+    this.setState({ error: "" });
     this.setState({
       [field]: event.target.value,
     });
@@ -36,6 +38,7 @@ class Signup extends Component {
           password: "",
           passwordConfirm: "",
           error: "",
+          created: true,
         });
     });
   };
@@ -55,68 +58,81 @@ class Signup extends Component {
       .catch((err) => console.log(err));
   };
 
+  signupForm = (name, email, password, passwordConfirm) => (
+    <form>
+      <div className="form-group">
+        <label className="text-muted">Name</label>
+        <input
+          onChange={this.handleChange("name")}
+          type="text"
+          className="form-control"
+          value={name}
+        />
+      </div>
+      <div className="form-group">
+        <label className="text-muted">Email</label>
+        <input
+          onChange={this.handleChange("email")}
+          type="email"
+          className="form-control"
+          value={email}
+        />
+      </div>
+      <div className="form-group">
+        <label className="text-muted">Password</label>
+        <input
+          onChange={this.handleChange("password")}
+          type="password"
+          className="form-control"
+          value={password}
+        />
+      </div>
+      <div className="form-group">
+        <label className="text-muted">Password Confirm</label>
+        <input
+          onChange={this.handleChange("passwordConfirm")}
+          type="password"
+          className="form-control"
+          value={passwordConfirm}
+        />
+      </div>
+      <button onClick={this.clickSubmit} className="btn btn-raised btn-primary">
+        Submit
+      </button>
+    </form>
+  );
+
   render() {
-    const { name, email, password, passwordConfirm, error } = this.state;
+    const {
+      name,
+      email,
+      password,
+      passwordConfirm,
+      error,
+      created,
+    } = this.state;
 
     return (
       <div className="container">
         <h2 className="mt-5 mb-5">Signup</h2>
 
         <div
-          className="alert alert-primary"
+          className="alert alert-danger"
           style={{ display: error ? "" : "none" }}
         >
-          {
-          (Array.isArray(error)) 
-            ? error[0] 
-            : error
-          }
+          {Array.isArray(error) ? error[0] : error}
         </div>
 
-        <form>
-          <div className="form-group">
-            <label className="text-muted">Name</label>
-            <input
-              onChange={this.handleChange("name")}
-              type="text"
-              className="form-control"
-              value={name}
-            />
-          </div>
-          <div className="form-group">
-            <label className="text-muted">Email</label>
-            <input
-              onChange={this.handleChange("email")}
-              type="email"
-              className="form-control"
-              value={email}
-            />
-          </div>
-          <div className="form-group">
-            <label className="text-muted">Password</label>
-            <input
-              onChange={this.handleChange("password")}
-              type="password"
-              className="form-control"
-              value={password}
-            />
-          </div>
-          <div className="form-group">
-            <label className="text-muted">Password Confirm</label>
-            <input
-              onChange={this.handleChange("passwordConfirm")}
-              type="password"
-              className="form-control"
-              value={passwordConfirm}
-            />
-          </div>
-          <button
-            onClick={this.clickSubmit}
-            className="btn btn-raised btn-primary"
-          >
-            Submit
-          </button>
-        </form>
+        <div
+          className="alert alert-info"
+          style={{ display: created ? "" : "none" }}
+        >
+          New Account has been successfully created. Please Sign In.
+        </div>
+
+        {/* ====================== */}
+
+        {this.signupForm(name, email, password, passwordConfirm)}
       </div>
     );
   }
