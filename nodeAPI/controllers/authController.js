@@ -167,7 +167,7 @@ exports.protect = catchAsync(
     //if the token does not exist
     if (!token) {
       return res.status(401).json({
-        message:
+        error:
           'You are not logged in! Please log in to get access',
       });
     }
@@ -192,7 +192,7 @@ exports.protect = catchAsync(
     // 3) Check if user changed password after the token was issued
     if (!currentUser) {
       res.status(401).json({
-        message:
+        error:
           'The user belonging to the token no longer exist, sorry.😢',
       });
     }
@@ -203,7 +203,7 @@ exports.protect = catchAsync(
       currentUser.changedPasswordAfter(decoded.iat)
     ) {
       return res.status(401).json({
-        message:
+        error:
           'User recently changed password! Please log in again',
       });
     }
@@ -230,7 +230,7 @@ exports.restrictTo = (...roles) => {
    .protect() function*/
     if (!roles.includes(req.user.role)) {
       res.status(403).json({
-        message:
+        error:
           'You do not have permission to perform this action',
       });
     }

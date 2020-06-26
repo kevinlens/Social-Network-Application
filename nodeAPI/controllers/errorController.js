@@ -19,7 +19,7 @@ const handleDuplicateFieldsDB = (err, res) => {
   // console.log(value);
   // console.log(message);
   res.status(400).json({
-    message,
+    error: message,
   });
 };
 
@@ -54,7 +54,7 @@ const sendErrorProd = (err, res) => {
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
-      message: err.message,
+      error: err.message,
     });
 
     //for programmer, dont leak error detail to user
@@ -65,7 +65,7 @@ const sendErrorProd = (err, res) => {
     //2)Generic message
     res.status(500).json({
       status: 'error',
-      message: 'Something went very wrong',
+      error: 'Something went very wrong',
     });
   }
 };

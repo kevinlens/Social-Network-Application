@@ -28,7 +28,7 @@ class Signup extends Component {
       passwordConfirm,
     };
     this.signup(user).then((data) => {
-        console.log(data.error)
+        console.log(data)
         this.setState({ error: data.error });
     //   else 
     //     this.setState({
@@ -52,7 +52,7 @@ class Signup extends Component {
       body: JSON.stringify(user),
     })
       .then((response) => {
-        return response.json;
+        return response.json();
       })
       .catch((err) => console.log(err));
   };

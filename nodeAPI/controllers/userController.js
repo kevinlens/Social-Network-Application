@@ -29,7 +29,7 @@ exports.getUser = catchAsync(
     const doc = await User.findById(req.params.id);
     if (!doc) {
       res.status(404).json({
-        message: 'No document found with that ID',
+        error: 'No document found with that ID',
       });
     }
 
@@ -53,7 +53,7 @@ exports.updateAccount = catchAsync(
       req.body.passwordConfirm
     ) {
       res.status(400).json({
-        message:
+        error:
           'This route is not for password updates. Please use the route /updateMyPassword',
       });
     }
@@ -145,7 +145,7 @@ exports.updateUser = catchAsync(
     //
     if (!doc) {
       res.status(404).json({
-        message: 'No document found with that ID',
+        error: 'No document found with that ID',
       });
     }
 
@@ -166,7 +166,7 @@ exports.deleteUser = catchAsync(
 
     if (!doc) {
       res.status(404).json({
-        message: 'No document found with that ID',
+        error: 'No document found with that ID',
       });
     }
 

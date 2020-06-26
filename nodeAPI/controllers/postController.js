@@ -170,7 +170,7 @@ exports.updateUsersPost = catchAsync(
 
     if (!doc) {
       res.status(404).json({
-        message: 'No document found with that ID',
+        error: 'No document found with that ID',
       });
     }
 
@@ -191,7 +191,7 @@ exports.deleteUsersPost = catchAsync(
 
     if (!doc) {
       res.status(404).json({
-        message: 'No document found with that ID',
+        error: 'No document found with that ID',
       });
     }
 
