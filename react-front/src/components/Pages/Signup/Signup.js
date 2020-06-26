@@ -113,7 +113,7 @@ class Signup extends Component {
     } = this.state;
 
     return (
-      <div className="container">
+      <section className="container">
         <h2 className="mt-5 mb-5">Signup</h2>
 
         <div
@@ -133,7 +133,7 @@ class Signup extends Component {
         {/* ====================== */}
 
         {this.signupForm(name, email, password, passwordConfirm)}
-      </div>
+      </section>
     );
   }
 }
