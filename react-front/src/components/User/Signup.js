@@ -7,6 +7,7 @@ class Signup extends Component {
       name: "",
       email: "",
       password: "",
+      passwordConfirm: "",
       error: "",
     };
   }
@@ -16,6 +17,33 @@ class Signup extends Component {
       [field]: event.target.value,
     });
   };
+
+  clickSubmit = (event) => {
+    event.preventDefault();
+    const { name, email, password, passwordConfirm } = this.state;
+    const user = {
+      name,
+      email,
+      password,
+      passwordConfirm,
+    };
+    this.signup(user);
+  }; 
+
+  signup = user =>{
+    fetch("http://localhost:8080/api/auth/signup", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((response) => {
+          return response.json;
+        })
+        .catch((err) => console.log(err));
+  }
 
   render() {
     return (
@@ -50,7 +78,21 @@ class Signup extends Component {
               value={this.state.password}
             />
           </div>
-          <button className="btn btn-raised btn-primary">Submit</button>
+          <div className="form-group">
+            <label className="text-muted">Password Confirm</label>
+            <input
+              onChange={this.handleChange("passwordConfirm")}
+              type="password"
+              className="form-control"
+              value={this.state.passwordConfirm}
+            />
+          </div>
+          <button
+            onClick={this.clickSubmit}
+            className="btn btn-raised btn-primary"
+          >
+            Submit
+          </button>
         </form>
       </div>
     );
