@@ -9,6 +9,7 @@ class Signin extends Component {
       password: "",
       error: "",
       redirect: false,
+      loading: false,
     };
   }
 
@@ -29,6 +30,7 @@ class Signin extends Component {
 
   clickSubmit = (event) => {
     event.preventDefault();
+    this.setState({ loading: true });
     const { email, password } = this.state;
     const user = {
       email,
@@ -36,7 +38,7 @@ class Signin extends Component {
     };
     this.signin(user).then((data) => {
       data.error
-        ? this.setState({ error: data.error })
+        ? this.setState({ error: data.error, loading: false })
         : this.authenticate(data, () => {
             this.setState({ redirect: true });
           });
@@ -87,7 +89,7 @@ class Signin extends Component {
   );
 
   render() {
-    const { email, password, error, redirect } = this.state;
+    const { email, password, error, redirect, loading } = this.state;
 
     if (redirect) {
       return <Redirect to="/" />;
@@ -103,6 +105,15 @@ class Signin extends Component {
         >
           {Array.isArray(error) ? error[0] : error}
         </div>
+
+        {
+            loading
+            ? (<div className="jumbotron text-center">
+                <h2>Loading...</h2>
+               </div>
+              )
+            : ("")
+        }
 
         {/* ====================== */}
 

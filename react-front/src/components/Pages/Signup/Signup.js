@@ -10,6 +10,7 @@ class Signup extends Component {
       passwordConfirm: "",
       error: "",
       created: false,
+      loading: false,
     };
   }
 
@@ -22,6 +23,7 @@ class Signup extends Component {
 
   clickSubmit = (event) => {
     event.preventDefault();
+    this.setState({ loading: true });
     const { name, email, password, passwordConfirm } = this.state;
     const user = {
       name,
@@ -30,7 +32,7 @@ class Signup extends Component {
       passwordConfirm,
     };
     this.signup(user).then((data) => {
-      if (data.error) this.setState({ error: data.error });
+      if (data.error) this.setState({ error: data.error, loading: false });
       else
         this.setState({
           name: "",
@@ -58,7 +60,7 @@ class Signup extends Component {
       .catch((err) => console.log(err));
   };
 
-  signupForm = (name, email, password, passwordConfirm) => (
+  signupForm = (name, email, password, passwordConfirm, loading) => (
     <form>
       <div className="form-group">
         <label className="text-muted">Name</label>
@@ -110,6 +112,7 @@ class Signup extends Component {
       passwordConfirm,
       error,
       created,
+      loading,
     } = this.state;
 
     return (
@@ -122,7 +125,13 @@ class Signup extends Component {
         >
           {Array.isArray(error) ? error[0] : error}
         </div>
-
+        {loading && !created ? (
+          <div className="jumbotron text-center">
+            <h2>Loading...</h2>
+          </div>
+        ) : (
+          ""
+        )}
         <div
           className="alert alert-info"
           style={{ display: created ? "" : "none" }}
