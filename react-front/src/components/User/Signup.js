@@ -28,17 +28,15 @@ class Signup extends Component {
       passwordConfirm,
     };
     this.signup(user).then((data) => {
-        console.log(data)
-        this.setState({ error: data.error });
-    //   else 
-    //     this.setState({
-    //       name: "",
-    //       email: "",
-    //       password: "",
-    //       passwordConfirm: "",
-    //       error: "",
-    //     });
-
+      if (data.error) this.setState({ error: data.error });
+      else
+        this.setState({
+          name: "",
+          email: "",
+          password: "",
+          passwordConfirm: "",
+          error: "",
+        });
     });
   };
 
