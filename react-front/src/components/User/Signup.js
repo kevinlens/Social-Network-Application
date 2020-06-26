@@ -56,9 +56,22 @@ class Signup extends Component {
   };
 
   render() {
+    const { name, email, password, passwordConfirm, error } = this.state;
+
     return (
       <div className="container">
         <h2 className="mt-5 mb-5">Signup</h2>
+
+        <div
+          className="alert alert-primary"
+          style={{ display: error ? "" : "none" }}
+        >
+          {
+          (Array.isArray(error)) 
+            ? error[0] 
+            : error
+          }
+        </div>
 
         <form>
           <div className="form-group">
@@ -67,7 +80,7 @@ class Signup extends Component {
               onChange={this.handleChange("name")}
               type="text"
               className="form-control"
-              value={this.state.name}
+              value={name}
             />
           </div>
           <div className="form-group">
@@ -76,7 +89,7 @@ class Signup extends Component {
               onChange={this.handleChange("email")}
               type="email"
               className="form-control"
-              value={this.state.email}
+              value={email}
             />
           </div>
           <div className="form-group">
@@ -85,7 +98,7 @@ class Signup extends Component {
               onChange={this.handleChange("password")}
               type="password"
               className="form-control"
-              value={this.state.password}
+              value={password}
             />
           </div>
           <div className="form-group">
@@ -94,7 +107,7 @@ class Signup extends Component {
               onChange={this.handleChange("passwordConfirm")}
               type="password"
               className="form-control"
-              value={this.state.passwordConfirm}
+              value={passwordConfirm}
             />
           </div>
           <button
