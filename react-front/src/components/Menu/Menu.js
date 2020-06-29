@@ -13,15 +13,17 @@ const isActive = (history, path) => {
 
 export const signout = (next) => {
   //if the window is NOT empty
-  if(typeof window !== "undefined") localStorage.removeItem("jwt")
+  if (typeof window !== "undefined") localStorage.removeItem("jwt");
   //redirects user
-  next()
+  next();
   return fetch("http://localhost:8080/api/auth/signout", {
     method: "GET",
-  }).then((response)=>{
-      console.log('signout', response)
-      return response.json()
-  }).catch(err => console.log(err))
+  })
+    .then((response) => {
+      console.log("signout", response);
+      return response.json();
+    })
+    .catch((err) => console.log(err));
 };
 
 const Menu = ({ history }) => (
@@ -49,6 +51,11 @@ const Menu = ({ history }) => (
         >
           Sign Up
         </Link>
+      </li>
+      <li>
+        <a className="nav-link" style={isActive(histroy, "/signup")}>
+          Sign Out
+        </a>
       </li>
     </ul>
   </section>
