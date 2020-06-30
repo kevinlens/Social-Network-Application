@@ -35,7 +35,7 @@ class Signup extends Component {
     
     this.signup(user).then((data) => {
       //
-      if (data.error.errors){
+      if (!data.error.errors === undefined){
         let mes = '';
         let mes1 = Object.entries(data.error.errors).map(element=>{
           return mes = Object.entries(element[1].properties).map(element1 =>{
@@ -45,13 +45,11 @@ class Signup extends Component {
         let mes2 = mes1.map(element=>{
           return element[0]
         })
-        console.log(mes2)
-        console.log(data.error.errors)
-        console.log(Object.keys(data.error.errors))
-    }
-      console.log(data.error)
-      if (data.error) console.log(data)
-      else
+        this.setState({ error: mes2, loading: false });
+    }else if (data.error) {
+        const duplicate = `${Object.values(data.error.keyValue)} already exist, please try another email`
+        this.setState({ error: duplicate, loading: false });
+      }else{
         this.setState({
           name: "",
           email: "",
@@ -59,7 +57,7 @@ class Signup extends Component {
           passwordConfirm: "",
           error: "",
           created: true,
-        });
+        })};
     });
   };
 
