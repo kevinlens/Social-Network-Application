@@ -3,6 +3,7 @@ import React from "react";
 via the withRouter higher-order component. withRouter will
 pass updated match, location, and history props to the 
 wrapped component */
+/*Think of 'history location pathname' as the pages current path location*/
 import { Link, withRouter } from "react-router-dom";
 
 const isActive = (history, path) => {
@@ -14,7 +15,7 @@ const isActive = (history, path) => {
 export const signout = (next) => {
   //if the window is NOT empty
   if (typeof window !== "undefined") localStorage.removeItem("jwt");
-  //redirects user
+  //redirects user by executing the middleware passed in
   next();
   return fetch("http://localhost:8080/api/auth/signout", {
     method: "GET",
@@ -34,29 +35,38 @@ const Menu = ({ history }) => (
           Home
         </Link>
       </li>
+
       <li className="nav-item">
         <Link
           className="nav-link"
           style={isActive(history, "/signup")}
           to="/signup"
         >
-          Sign In
+          Sign Up
         </Link>
       </li>
+
       <li className="nav-item">
         <Link
           className="nav-link"
           style={isActive(history, "/signin")}
           to="/signin"
         >
-          Sign Up
+          Sign In
         </Link>
       </li>
-      <li>
-        <a className="nav-link" style={isActive(histroy, "/signup")}>
+
+      {/* <li className="nav-item">
+        <a
+          className="nav-link"
+          style={{ cursor: "pointer", color: "#fff" }}
+          //forces the path location to be '/'
+          onClick={() => signout(() => history.push("/"))}
+        >
           Sign Out
         </a>
-      </li>
+      </li> */}
+      
     </ul>
   </section>
 );

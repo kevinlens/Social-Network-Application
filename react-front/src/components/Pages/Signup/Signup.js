@@ -24,6 +24,7 @@ class Signup extends Component {
   clickSubmit = (event) => {
     event.preventDefault();
     this.setState({ loading: true });
+    
     const { name, email, password, passwordConfirm } = this.state;
     const user = {
       name,
@@ -31,8 +32,25 @@ class Signup extends Component {
       password,
       passwordConfirm,
     };
+    
     this.signup(user).then((data) => {
-      if (data.error) this.setState({ error: data.error, loading: false });
+      //
+      if (data.error.errors){
+        let mes = '';
+        let mes1 = Object.entries(data.error.errors).map(element=>{
+          return mes = Object.entries(element[1].properties).map(element1 =>{
+            return element1[1]
+          })
+        })
+        let mes2 = mes1.map(element=>{
+          return element[0]
+        })
+        console.log(mes2)
+        console.log(data.error.errors)
+        console.log(Object.keys(data.error.errors))
+    }
+      console.log(data.error)
+      if (data.error) console.log(data)
       else
         this.setState({
           name: "",
