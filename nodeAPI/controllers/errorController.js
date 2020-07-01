@@ -34,6 +34,7 @@ const handleValidationErrorDB = (err, res) => {
     [ 'Title must be between 4 to 150 characters',
       'Body must be between 4 to 2000 characters' ]
   */
+
   const errors = Object.values(err.errors).map(
     (element) => element.message
   );
@@ -43,6 +44,8 @@ const handleValidationErrorDB = (err, res) => {
 
   res.status(err.statusCode).json({
     error: message,
+    data: err.errors.email.message,
+    data2: err.errors,
   });
 };
 
