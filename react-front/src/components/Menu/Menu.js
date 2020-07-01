@@ -50,7 +50,8 @@ const Menu = ({ history }) => (
 
       {/* if 'isAuthenticated' is not true, then display */}
       {!isAuthenticated() && (
-        <section>
+        //Fragments '<></>' let you group a list of children without adding extra nodes to the DOM.
+        <>
           <li className="nav-item">
             <Link
               className="nav-link"
@@ -70,23 +71,24 @@ const Menu = ({ history }) => (
               Sign In
             </Link>
           </li>
-        </section>
+        </>
       )}
 
       {/* if is not authenticated, meaning not signed in */}
       {isAuthenticated() && (
-        <section>
+        //Fragments '<></>' let you group a list of children without adding extra nodes to the DOM.
+        <>
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link"
               style={{ cursor: "pointer", color: "#fff" }}
               //forces the path location to be '/'
               onClick={() => signout(() => history.push("/"))}
             >
               Sign Out
-            </a>
+            </Link>
           </li>
-        </section>
+        </>
       )}
     </ul>
   </section>
