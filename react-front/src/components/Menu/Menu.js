@@ -27,6 +27,18 @@ export const signout = (next) => {
     .catch((err) => console.log(err));
 };
 
+export const isAuthenticated = () => {
+  if (typeof window == "undefined") {
+    return false;
+  }
+
+  if (localStorage.getItem("jwt")) {
+    return JSON.parse(localStorage.getItem("jwt"));
+  } else {
+    return false;
+  }
+};
+
 const Menu = ({ history }) => (
   <section>
     <ul className="nav nav-tabs bg-primary">
@@ -36,37 +48,46 @@ const Menu = ({ history }) => (
         </Link>
       </li>
 
-      <li className="nav-item">
-        <Link
-          className="nav-link"
-          style={isActive(history, "/signup")}
-          to="/signup"
-        >
-          Sign Up
-        </Link>
-      </li>
+      {/* if 'isAuthenticated' is not true, then display */}
+      {!isAuthenticated() && (
+        <section>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              style={isActive(history, "/signup")}
+              to="/signup"
+            >
+              Sign Up
+            </Link>
+          </li>
 
-      <li className="nav-item">
-        <Link
-          className="nav-link"
-          style={isActive(history, "/signin")}
-          to="/signin"
-        >
-          Sign In
-        </Link>
-      </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
+              style={isActive(history, "/signin")}
+              to="/signin"
+            >
+              Sign In
+            </Link>
+          </li>
+        </section>
+      )}
 
-      <li className="nav-item">
-        <a
-          className="nav-link"
-          style={{ cursor: "pointer", color: "#fff" }}
-          //forces the path location to be '/'
-          onClick={() => signout(() => history.push("/"))}
-        >
-          Sign Out
-        </a>
-      </li>
-      
+      {/* if is not authenticated, meaning not signed in */}
+      {isAuthenticated() && (
+        <section>
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              style={{ cursor: "pointer", color: "#fff" }}
+              //forces the path location to be '/'
+              onClick={() => signout(() => history.push("/"))}
+            >
+              Sign Out
+            </a>
+          </li>
+        </section>
+      )}
     </ul>
   </section>
 );
