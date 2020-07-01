@@ -44,8 +44,6 @@ const handleValidationErrorDB = (err, res) => {
 
   res.status(err.statusCode).json({
     error: message,
-    data: err.errors.email.message,
-    data2: err.errors,
   });
 };
 

@@ -56,7 +56,7 @@ const Menu = ({ history }) => (
         </Link>
       </li>
 
-      {/* <li className="nav-item">
+      <li className="nav-item">
         <a
           className="nav-link"
           style={{ cursor: "pointer", color: "#fff" }}
@@ -65,7 +65,7 @@ const Menu = ({ history }) => (
         >
           Sign Out
         </a>
-      </li> */}
+      </li>
       
     </ul>
   </section>

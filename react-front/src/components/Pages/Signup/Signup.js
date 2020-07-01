@@ -32,7 +32,6 @@ class Signup extends Component {
       passwordConfirm,
     };
     this.signup(user).then((data) => {
-      console.log(data)
       if (data.error) this.setState({ error: data.error, loading: false });
       else
         this.setState({
