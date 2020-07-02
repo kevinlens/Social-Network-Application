@@ -5,6 +5,7 @@ pass updated match, location, and history props to the
 wrapped component */
 /*Think of 'history location pathname' as the pages current path location*/
 import { Link, withRouter } from "react-router-dom";
+import { isAuthenticated } from '../Auth/Auth';
 
 const isActive = (history, path) => {
   return history.location.pathname === path
@@ -27,17 +28,7 @@ export const signout = (next) => {
     .catch((err) => console.log(err));
 };
 
-export const isAuthenticated = () => {
-  if (typeof window == "undefined") {
-    return false;
-  }
 
-  if (localStorage.getItem("jwt")) {
-    return JSON.parse(localStorage.getItem("jwt"));
-  } else {
-    return false;
-  }
-};
 
 const Menu = ({ history }) => (
   <section>
@@ -90,7 +81,13 @@ const Menu = ({ history }) => (
           </li>
 
           <li className="nav-item">
-            <a className="nav-link">{isAuthenticated().user.name}</a>
+            <Link
+              to={`/user/${isAuthenticated().user._id}`}
+              style={{ color: "#fff", textDecoration: "none" }}
+              className="nav-link"
+            >
+              {`${isAuthenticated().user.name}'s profile`}
+            </Link>
           </li>
         </>
       )}
