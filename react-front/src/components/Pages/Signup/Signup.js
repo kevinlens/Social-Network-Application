@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+//imported regular function
+import {signup} from "../../Auth/Auth"
 
 class Signup extends Component {
   constructor() {
@@ -31,7 +33,7 @@ class Signup extends Component {
       password,
       passwordConfirm,
     };
-    this.signup(user).then((data) => {
+    signup(user).then((data) => {
       if (data.error) this.setState({ error: data.error, loading: false });
       else
         this.setState({
@@ -45,20 +47,7 @@ class Signup extends Component {
     });
   };
 
-  signup = (user) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/api/auth/signup`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .catch((err) => console.log(err));
-  };
+
 
   signupForm = (name, email, password, passwordConfirm, loading) => (
     <form>

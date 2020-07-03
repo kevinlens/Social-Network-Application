@@ -5,27 +5,12 @@ pass updated match, location, and history props to the
 wrapped component */
 /*Think of 'history location pathname' as the pages current path location*/
 import { Link, withRouter } from "react-router-dom";
-import { isAuthenticated } from "../Auth/Auth";
+import { isAuthenticated, signout } from "../Auth/Auth";
 
 const isActive = (history, path) => {
   return history.location.pathname === path
     ? { color: "#ff9900" }
     : { color: "#ffffff" };
-};
-
-export const signout = (next) => {
-  //if the window is NOT empty
-  if (typeof window !== "undefined") localStorage.removeItem("jwt");
-  //redirects user by executing the middleware passed in
-  next();
-  return fetch(`${process.env.REACT_APP_API_URL}api/auth/signout`, {
-    method: "GET",
-  })
-    .then((response) => {
-      console.log("signout", response);
-      return response.json();
-    })
-    .catch((err) => console.log(err));
 };
 
 const Menu = ({ history }) => (
@@ -73,6 +58,7 @@ const Menu = ({ history }) => (
               style={{ cursor: "pointer", color: "#fff" }}
               //forces the path location to be '/'
               onClick={() => signout(() => history.push("/"))}
+              to="/"
             >
               Sign Out
             </Link>

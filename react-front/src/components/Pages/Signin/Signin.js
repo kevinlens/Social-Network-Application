@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+//imported regular function
+import {signin} from "../../Auth/Auth"
 
 class Signin extends Component {
   constructor() {
@@ -36,7 +38,7 @@ class Signin extends Component {
       email,
       password,
     };
-    this.signin(user).then((data) => {
+    signin(user).then((data) => {
       data.error
         ? this.setState({ error: data.error, loading: false })
         : this.authenticate(data, () => {
@@ -45,20 +47,6 @@ class Signin extends Component {
     });
   };
 
-  signin = (user) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/api/auth/signin`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .catch((err) => console.log(err));
-  };
 
   signinForm = (email, password) => (
     <form>
@@ -106,14 +94,13 @@ class Signin extends Component {
           {Array.isArray(error) ? error[0] : error}
         </div>
 
-        {
-            loading
-            ? (<div className="jumbotron text-center">
-                <h2>Loading...</h2>
-               </div>
-              )
-            : ("")
-        }
+        {loading ? (
+          <div className="jumbotron text-center">
+            <h2>Loading...</h2>
+          </div>
+        ) : (
+          ""
+        )}
 
         {/* ====================== */}
 
