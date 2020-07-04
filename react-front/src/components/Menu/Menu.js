@@ -63,16 +63,28 @@ const Menu = ({ history }) => (
               Sign Out
             </Link>
           </li>
-
+        {/* PROFILE */}
           <li className="nav-item">
-            <Link
-              to={`/user/${isAuthenticated().user._id}`}
-              style={{ color: "#fff", textDecoration: "none" }}
-              className="nav-link"
-            >
-              {`${isAuthenticated().user.name}'s profile`}
-            </Link>
+            {/* if user is admin */}
+            {isAuthenticated().user.role === "admin" ? (
+              <Link
+                to={`/user/:addIdHere`}
+                style={{ color: "#fff", textDecoration: "none" }}
+                className="nav-link"
+              >
+                {`Targetted User's profile`}
+              </Link>
+            ) : (
+              <Link
+                to={`/user/myAccount`}
+                style={{ color: "#fff", textDecoration: "none" }}
+                className="nav-link"
+              >
+                {`${isAuthenticated().user.name}'s profile`}
+              </Link>
+            )}
           </li>
+
         </>
       )}
     </ul>

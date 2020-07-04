@@ -38,9 +38,7 @@ exports.getUser = catchAsync(
     because 'docs' is already one */
     res.status(200).json({
       status: 'success',
-      data: {
-        data: doc,
-      },
+      data: doc,
     });
   }
 );
@@ -81,9 +79,7 @@ exports.updateAccount = catchAsync(
     );
     res.status(200).json({
       status: 'success',
-      data: {
-        user: updatedUser,
-      },
+      user: updatedUser,
     });
   }
 );
@@ -124,9 +120,7 @@ exports.getUsers = catchAsync(
     res.status(200).json({
       status: 'success',
       results: users.length,
-      data: {
-        users,
-      },
+      users,
     });
   }
 );
@@ -151,9 +145,7 @@ exports.updateUser = catchAsync(
 
     res.status(200).json({
       status: 'success',
-      data: {
-        data: doc,
-      },
+      data: doc,
     });
   }
 );

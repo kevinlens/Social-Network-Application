@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { isAuthenticated } from "../../Auth/Auth";
 
-class Profile extends Component {
+class ProfileAdmin extends Component {
   constructor() {
     super();
     this.state = {
@@ -11,8 +11,9 @@ class Profile extends Component {
   }
 
   componentDidMount() {
+
     const userId = this.props.match.params.userId;
-    console.log("coming from profile");
+    console.log('coming from admin')
     fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: "GET",
       headers: {
@@ -35,13 +36,15 @@ class Profile extends Component {
           console.log(this.state.user);
         }
       });
+      
+
   }
 
   render() {
     return (
       <div className="container">
         <h2 className="mt-5 mb-5">Profile</h2>
-        <p>Hello {isAuthenticated().user.name}</p>
+        <p>{isAuthenticated().user.name}</p>
         <p>Email: {isAuthenticated().user.email}</p>
         <p>{`Joined: ${new Date(this.state.user.created).toDateString()}`}</p>
       </div>
@@ -49,4 +52,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+export default ProfileAdmin;
