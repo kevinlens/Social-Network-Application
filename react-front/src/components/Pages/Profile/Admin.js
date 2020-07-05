@@ -6,13 +6,14 @@ class ProfileAdmin extends Component {
     super();
     this.state = {
       user: "",
+      error: "",
       redirectToSignIn: false,
     };
   }
-
+  // allows admin to search for any user through their id by putting in the url
   componentDidMount() {
     const userId = this.props.match.params.addIdHere;
-    console.log(userId);
+    //
     fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: "GET",
       headers: {
@@ -27,8 +28,11 @@ class ProfileAdmin extends Component {
       })
       .then((data) => {
         if (data.error) {
-          //Log the error message
-          console.log(data.error);
+          if (this.props.match.params.addIdHere === ":addIdHere") {
+            this.setState({ error: "Add the selected user ID to the URL for user search up" });
+          } else {
+            this.setState({ error: data.error });
+          }
         } else {
           //set the state
           this.setState({ user: data.data });
@@ -41,9 +45,17 @@ class ProfileAdmin extends Component {
     return (
       <div className="container">
         <h2 className="mt-5 mb-5">Profile</h2>
-        <p>{this.state.user.name}</p>
-        <p>{this.state.user.email}</p>
-        <p>{`Joined: ${new Date(this.state.user.created).toDateString()}`}</p>
+        {!this.state.error ? (
+          <>
+            <p>{this.state.user.name}</p>
+            <p>{this.state.user.email}</p>
+            <p>{`Joined: ${new Date(
+              this.state.user.created
+            ).toDateString()}`}</p>
+          </>
+        ) : (
+          <p>{this.state.error}</p>
+        )}
       </div>
     );
   }
