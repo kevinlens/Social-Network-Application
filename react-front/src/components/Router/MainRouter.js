@@ -14,6 +14,7 @@ const MainRouter = () => (
       <Route exact path="/" component={Home} />
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/signin" component={Signin} />
+      {/* when there is same path like '/user/' you have to be very careful */}
       <Route path="/user/myAccount" component={Profile} />
       <Route exact path="/user/:addIdHere" component={ProfileAdmin} />
 

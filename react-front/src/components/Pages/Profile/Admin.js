@@ -12,7 +12,7 @@ class ProfileAdmin extends Component {
 
   componentDidMount() {
     const userId = this.props.match.params.addIdHere;
-    console.log(userId)
+    console.log(userId);
     fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: "GET",
       headers: {
@@ -35,16 +35,14 @@ class ProfileAdmin extends Component {
           console.log(this.state.user);
         }
       });
-      
-
   }
 
   render() {
     return (
       <div className="container">
         <h2 className="mt-5 mb-5">Profile</h2>
-        <p>{isAuthenticated().user.name}</p>
-        <p>Email: {isAuthenticated().user.email}</p>
+        <p>{this.state.user.name}</p>
+        <p>{this.state.user.email}</p>
         <p>{`Joined: ${new Date(this.state.user.created).toDateString()}`}</p>
       </div>
     );
