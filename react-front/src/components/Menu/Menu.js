@@ -71,6 +71,7 @@ const Menu = ({ history }) => (
                 to={`/user/:addIdHere`}
                 style={{ color: "#fff", textDecoration: "none" }}
                 className="nav-link"
+                
               >
                 {`Targetted User's profile`}
               </Link>

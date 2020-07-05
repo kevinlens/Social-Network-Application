@@ -11,9 +11,8 @@ class ProfileAdmin extends Component {
   }
 
   componentDidMount() {
-
-    const userId = this.props.match.params.userId;
-    console.log('coming from admin')
+    const userId = this.props.match.params.addIdHere;
+    console.log(userId)
     fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: "GET",
       headers: {
