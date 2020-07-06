@@ -10,7 +10,7 @@ class ProfileAdmin extends Component {
       redirectToSignIn: false,
     };
   }
-  // allows admin to search for any user through their id by putting in the url
+  // allows admin to search for any user through their users by putting in the url
   componentDidMount() {
     const userId = this.props.match.params.addIdHere;
     //
