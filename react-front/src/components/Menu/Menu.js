@@ -63,15 +63,16 @@ const Menu = ({ history }) => (
               Sign Out
             </Link>
           </li>
-        {/* PROFILE */}
+          {/* PROFILE */}
           <li className="nav-item">
             {/* if user is admin */}
             {isAuthenticated().user.role === "admin" ? (
               <Link
                 to={`/user/:addIdHere`}
-                style={{ color: "#fff", textDecoration: "none" }}
+                style={
+                  (isActive(history, "/user/:addIdHere"))
+                }
                 className="nav-link"
-                
               >
                 {`Targetted User's profile`}
               </Link>
@@ -85,7 +86,6 @@ const Menu = ({ history }) => (
               </Link>
             )}
           </li>
-
         </>
       )}
     </ul>

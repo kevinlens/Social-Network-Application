@@ -10,10 +10,10 @@ class ProfileAdmin extends Component {
       redirectToSignIn: false,
     };
   }
-  // allows admin to search for any user through their users by putting in the url
-  componentDidMount() {
-    const userId = this.props.match.params.addIdHere;
-    //
+
+  //
+
+  init = (userId) => {
     fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: "GET",
       headers: {
@@ -29,7 +29,9 @@ class ProfileAdmin extends Component {
       .then((data) => {
         if (data.error) {
           if (this.props.match.params.addIdHere === ":addIdHere") {
-            this.setState({ error: "Add the selected user ID to the URL for user search up" });
+            this.setState({
+              error: "Add the selected user ID to the URL for user search up",
+            });
           } else {
             this.setState({ error: data.error });
           }
@@ -39,7 +41,20 @@ class ProfileAdmin extends Component {
           console.log(this.state.user);
         }
       });
+  };
+
+  //
+
+  //
+
+  // allows admin to search for any user through their users by putting in the url
+  componentDidMount() {
+    const userId = this.props.match.params.addIdHere;
+    //
+    this.init(userId);
   }
+
+  //
 
   render() {
     return (
