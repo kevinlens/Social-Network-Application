@@ -55,6 +55,15 @@ const Menu = ({ history }) => (
           <li className="nav-item">
             <Link
               className="nav-link"
+              style={isActive(history, "/users")}
+              to="/users"
+            >
+              Users
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className="nav-link"
               style={{ cursor: "pointer", color: "#fff" }}
               //forces the path location to be '/'
               onClick={() => signout(() => history.push("/"))}
@@ -69,9 +78,7 @@ const Menu = ({ history }) => (
             {isAuthenticated().user.role === "admin" ? (
               <Link
                 to={`/user/:addIdHere`}
-                style={
-                  (isActive(history, "/user/:addIdHere"))
-                }
+                style={isActive(history, "/user/:addIdHere")}
                 className="nav-link"
               >
                 {`Targetted User's profile`}

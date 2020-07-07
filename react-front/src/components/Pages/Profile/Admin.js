@@ -67,6 +67,22 @@ class ProfileAdmin extends Component {
             <p>{`Joined: ${new Date(
               this.state.user.created
             ).toDateString()}`}</p>
+            {/* ---- */}
+            <div className="col-md-6">
+              {isAuthenticated() ? (
+                <div className="d-inline-block mt-5">
+                  <button
+                    className="btn btn-raised btn-success mr-5"
+                  >
+                    Edit Profile
+                  </button>
+                  <button className="btn btn-raised btn-danger">
+                    Delete Profile
+                  </button>
+                </div>
+              ) : null}
+            </div>
+            {/* ---- */}
           </>
         ) : (
           <p>{this.state.error}</p>
