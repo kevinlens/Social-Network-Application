@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 //imported regular function
-import {signup} from "../../Auth/Auth"
-
+import { signup } from "../../Auth/Auth";
+import { Link } from "react-router-dom";
 class Signup extends Component {
   constructor() {
     super();
@@ -46,8 +46,6 @@ class Signup extends Component {
         });
     });
   };
-
-
 
   signupForm = (name, email, password, passwordConfirm, loading) => (
     <form>
@@ -125,7 +123,8 @@ class Signup extends Component {
           className="alert alert-info"
           style={{ display: created ? "" : "none" }}
         >
-          New Account has been successfully created. Please Sign In.
+          New Account has been successfully created. Please{" "}
+          <Link to="/signin">Sign In</Link>
         </div>
 
         {/* ====================== */}
