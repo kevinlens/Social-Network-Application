@@ -18,7 +18,7 @@ const MainRouter = () => (
       <Route exact path="/signin" component={Signin} />
       {/* when there is same path like '/user/' you have to be very careful */}
       <Route path="/user/myAccount" component={Profile} />
-      <Route exact path="/user/:addIdHere" component={ProfileAdmin} />
+      <Route exact path="/users/:addIdHere" component={ProfileAdmin} />
 
     </Switch>
   </section>

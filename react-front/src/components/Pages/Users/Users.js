@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { isAuthenticated } from "../../Auth/Auth";
-import DefaultProfile from '../../images/defaultProfile.gif'
+import DefaultProfile from "../../images/defaultProfile.gif";
+import { Link } from "react-router-dom";
 class Users extends Component {
   constructor() {
     super();
@@ -53,9 +54,12 @@ class Users extends Component {
             {/* <!-- Text --> */}
             <p className="card-text">{user.email}</p>
             {/* <!-- Button --> */}
-            <a href="#" className="btn btn-raised btn-primary btn-sm">
+            <Link
+              to={`/users/${user._id}`}
+              className="btn btn-raised btn-primary btn-sm"
+            >
               View Profile
-            </a>
+            </Link>
           </div>
         </div>
         // <!-- Card -->

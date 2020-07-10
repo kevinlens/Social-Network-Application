@@ -77,7 +77,7 @@ const Menu = ({ history }) => (
             {/* if user is admin */}
             {isAuthenticated().user.role === "admin" ? (
               <Link
-                to={`/user/:addIdHere`}
+                to={`/users/:addIdHere`}
                 style={isActive(history, "/user/:addIdHere")}
                 className="nav-link"
               >

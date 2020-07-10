@@ -24,6 +24,7 @@ router.get(
   userController.getMe,
   userController.getUser
 );
+// router.get('/userProfile/:id', userController.getUser);
 
 //user are allowed to update name and email
 router.patch(
