@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { isAuthenticated } from "../../Auth/Auth";
+import DefaultProfile from "../../images/defaultProfile.gif";
 
 class ProfileAdmin extends Component {
   constructor() {
@@ -57,23 +58,31 @@ class ProfileAdmin extends Component {
   //
 
   render() {
+    const {user} = this.state;
     return (
       <div className="container">
         <h2 className="mt-5 mb-5">Profile</h2>
+        <img
+          className="card-img-top"
+          src={DefaultProfile}
+          alt={user.name}
+          style={{ width: "50vw", height: "40vh", objectFit: "cover" }}
+        />
         {!this.state.error ? (
           <>
+          <div className="lead mt-5 ml-5">
             <p>{this.state.user.name}</p>
             <p>{this.state.user.email}</p>
             <p>{`Joined: ${new Date(
               this.state.user.created
-            ).toDateString()}`}</p>
+            ).toDateString()}`}
+            </p>
+          </div>
             {/* ---- */}
             <div className="col-md-6">
               {isAuthenticated().user.role === "admin" ? (
                 <div className="d-inline-block mt-5">
-                  <button
-                    className="btn btn-raised btn-success mr-5"
-                  >
+                  <button className="btn btn-raised btn-success mr-5">
                     Edit Profile
                   </button>
                   <button className="btn btn-raised btn-danger">
