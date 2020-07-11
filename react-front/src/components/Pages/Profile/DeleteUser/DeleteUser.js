@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { isAuthenticated } from "../../../Auth/Auth";
 import { Redirect } from "react-router-dom";
+import { isAuthenticated } from "../../../Auth/Auth";
 class DeleteUser extends Component {
   state = {
     redirect: false,
   };
   //===================================
-  remove = (userId, token) => {
+  remove = (userId,token) => {
     return fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: "DELETE",
       headers: {
@@ -15,7 +15,11 @@ class DeleteUser extends Component {
         //provides the current users jwt
         Authorization: `Bearer ${token}`,
       },
-    });
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .catch((err) => console.log(err));
   };
 
   signout = (next) => {
@@ -36,7 +40,7 @@ class DeleteUser extends Component {
   deleteAccount = () => {
     const token = isAuthenticated().token;
     const userId = this.props.userId;
-    this.remove(userId, token).then((data) => {
+    this.remove(userId,token).then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {
