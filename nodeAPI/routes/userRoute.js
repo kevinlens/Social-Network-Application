@@ -36,7 +36,7 @@ router.delete(
   '/deleteAccount',
   userController.deleteAccount
 );
-
+router.route('/:id').get(userController.getUser);
 //
 
 //ANYTHING that comes AFTER this point will have this middleware applied
@@ -47,7 +47,6 @@ router.use(authController.restrictTo('admin'));
 
 router
   .route('/:id')
-  .get(userController.getUser)
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
 

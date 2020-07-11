@@ -69,7 +69,7 @@ class ProfileAdmin extends Component {
             ).toDateString()}`}</p>
             {/* ---- */}
             <div className="col-md-6">
-              {isAuthenticated() ? (
+              {isAuthenticated().user.role === "admin" ? (
                 <div className="d-inline-block mt-5">
                   <button
                     className="btn btn-raised btn-success mr-5"
