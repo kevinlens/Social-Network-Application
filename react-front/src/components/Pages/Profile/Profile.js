@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { isAuthenticated } from "../../Auth/Auth";
 import { Link } from "react-router-dom";
 import DefaultProfile from "../../images/defaultProfile.gif";
-import DeleteUser from './DeleteUser/DeleteUser'
+// import DeleteUser from './DeleteUser/DeleteUser'
 
 class Profile extends Component {
   constructor() {

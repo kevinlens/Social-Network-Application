@@ -91,7 +91,7 @@ class ProfileAdmin extends Component {
                     <button className="btn btn-raised btn-success mr-5">
                       Edit Profile
                     </button>
-                    <DeleteUser userId={user._id} />
+                    <DeleteUser  />
                   </div>
                 ) : null}
               </div>
