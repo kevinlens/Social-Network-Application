@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { isAuthenticated } from "../../Auth/Auth";
 import { Link } from "react-router-dom";
 import DefaultProfile from "../../images/defaultProfile.gif";
+import DeleteUser from './DeleteUser/DeleteUser'
 
 class Profile extends Component {
   constructor() {
@@ -41,10 +42,10 @@ class Profile extends Component {
 
     return (
       <div className="container">
+        <h2 className="mt-5 mb-5">Profile</h2>
+
         <div className="row">
-          
           <div className="col-md-6">
-            <h2 className="mt-5 mb-5">Profile</h2>
             <img
               className="card-img-top"
               src={DefaultProfile}
@@ -56,7 +57,7 @@ class Profile extends Component {
           <div className="col-md-6">
             {isAuthenticated() ? (
               <>
-                <div className="lead mt-5 ml-5">
+                <div className="lead mt-2">
                   <p>Hello {isAuthenticated().user.name}</p>
                   <p>Email: {isAuthenticated().user.email}</p>
                   <p>
@@ -65,16 +66,14 @@ class Profile extends Component {
                     ).toDateString()}`}
                   </p>
                 </div>
-                <div className="d-inline-block mt-5">
+                <div className="d-inline-block">
                   <Link
                     className="btn btn-raised btn-success mr-5"
                     to={"/user/updateAccount"}
                   >
                     Edit Profile
                   </Link>
-                  <button className="btn btn-raised btn-danger">
-                    Delete Profile
-                  </button>
+                {/* <DeleteUser /> */}
                 </div>
               </>
             ) : null}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { isAuthenticated } from "../../Auth/Auth";
 import DefaultProfile from "../../images/defaultProfile.gif";
+import DeleteUser from "./DeleteUser/DeleteUser";
 
 class ProfileAdmin extends Component {
   constructor() {
@@ -39,7 +40,6 @@ class ProfileAdmin extends Component {
         } else {
           //set the state
           this.setState({ user: data.data });
-          console.log(this.state.user);
         }
       });
   };
@@ -61,48 +61,46 @@ class ProfileAdmin extends Component {
     const { user } = this.state;
     return (
       <div className="container">
-                <div className="row">
+        <h2 className="mt-5 mb-5">Profile</h2>
 
-        <div className="col-md-6">
-          <h2 className="mt-5 mb-5">Profile</h2>
-          <img
-            className="card-img-top"
-            src={DefaultProfile}
-            alt={user.name}
-            style={{ width: "30vw", height: "40vh", objectFit: "cover" }}
-          />
-        </div>
+        <div className="row">
+          <div className="col-md-6">
+            <img
+              className="card-img-top"
+              src={DefaultProfile}
+              alt={user.name}
+              style={{ width: "30vw", height: "40vh", objectFit: "cover" }}
+            />
+          </div>
 
-        {!this.state.error ? (
-          <>
-            {/* ---- */}
-            <div className="col-md-6">
-              <div className="lead mt-5 ml-5">
-                <p>{this.state.user.name}</p>
-                <p>{this.state.user.email}</p>
-                <p>
-                  {`Joined: ${new Date(
-                    this.state.user.created
-                  ).toDateString()}`}
-                </p>
-              </div>
-              {isAuthenticated().user.role === "admin" ? (
-                <div className="d-inline-block mt-5">
-                  <button className="btn btn-raised btn-success mr-5">
-                    Edit Profile
-                  </button>
-                  <button className="btn btn-raised btn-danger">
-                    Delete Profile
-                  </button>
+          {!this.state.error ? (
+            <>
+              {/* ---- */}
+              <div className="col-md-6">
+                <div className="lead mt-2">
+                  <p>{this.state.user.name}</p>
+                  <p>{this.state.user.email}</p>
+                  <p>
+                    {`Joined: ${new Date(
+                      this.state.user.created
+                    ).toDateString()}`}
+                  </p>
                 </div>
-              ) : null}
-            </div>
-            {/* ---- */}
-          </>
-        ) : (
-          <p>{this.state.error}</p>
-        )}
-      </div>
+                {isAuthenticated().user.role === "admin" ? (
+                  <div className="d-inline-block">
+                    <button className="btn btn-raised btn-success mr-5">
+                      Edit Profile
+                    </button>
+                    <DeleteUser userId={user._id} />
+                  </div>
+                ) : null}
+              </div>
+              {/* ---- */}
+            </>
+          ) : (
+            <p>{this.state.error}</p>
+          )}
+        </div>
       </div>
     );
   }
