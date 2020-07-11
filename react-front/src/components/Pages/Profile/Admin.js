@@ -58,28 +58,34 @@ class ProfileAdmin extends Component {
   //
 
   render() {
-    const {user} = this.state;
+    const { user } = this.state;
     return (
       <div className="container">
-        <h2 className="mt-5 mb-5">Profile</h2>
-        <img
-          className="card-img-top"
-          src={DefaultProfile}
-          alt={user.name}
-          style={{ width: "50vw", height: "40vh", objectFit: "cover" }}
-        />
+                <div className="row">
+
+        <div className="col-md-6">
+          <h2 className="mt-5 mb-5">Profile</h2>
+          <img
+            className="card-img-top"
+            src={DefaultProfile}
+            alt={user.name}
+            style={{ width: "30vw", height: "40vh", objectFit: "cover" }}
+          />
+        </div>
+
         {!this.state.error ? (
           <>
-          <div className="lead mt-5 ml-5">
-            <p>{this.state.user.name}</p>
-            <p>{this.state.user.email}</p>
-            <p>{`Joined: ${new Date(
-              this.state.user.created
-            ).toDateString()}`}
-            </p>
-          </div>
             {/* ---- */}
             <div className="col-md-6">
+              <div className="lead mt-5 ml-5">
+                <p>{this.state.user.name}</p>
+                <p>{this.state.user.email}</p>
+                <p>
+                  {`Joined: ${new Date(
+                    this.state.user.created
+                  ).toDateString()}`}
+                </p>
+              </div>
               {isAuthenticated().user.role === "admin" ? (
                 <div className="d-inline-block mt-5">
                   <button className="btn btn-raised btn-success mr-5">
@@ -96,6 +102,7 @@ class ProfileAdmin extends Component {
         ) : (
           <p>{this.state.error}</p>
         )}
+      </div>
       </div>
     );
   }
