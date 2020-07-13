@@ -12,31 +12,6 @@ class Profile extends Component {
     };
   }
 
-  componentDidMount() {
-    // const userId = this.props.match.params.addIdHere;
-    // fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
-    //   method: "GET",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //     //provides the current users jwt
-    //     Authorization: `Bearer ${isAuthenticated().token}`,
-    //   },
-    // })
-    //   .then((response) => {
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     if (data.error) {
-    //       console.log(data.error);
-    //     } else {
-    //       //set the state
-    //       this.setState({ user: data.data });
-    //       console.log(this.state.user);
-    //     }
-    //   });
-  }
-
   render() {
     const { user } = this.state;
 
