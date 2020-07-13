@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { isAuthenticated } from "../../Auth/Auth";
 import { Link } from "react-router-dom";
 import DefaultProfile from "../../images/defaultProfile.gif";
-// import DeleteUser from './DeleteUser/DeleteUser'
+import DisableUser from './DeleteUser/DisableUser'
 
 class Profile extends Component {
   constructor() {
@@ -73,7 +73,7 @@ class Profile extends Component {
                   >
                     Edit Profile
                   </Link>
-                {/* <DeleteUser /> */}
+                <DisableUser />
                 </div>
               </>
             ) : null}
