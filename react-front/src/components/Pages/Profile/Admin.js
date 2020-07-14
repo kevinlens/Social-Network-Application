@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { isAuthenticated } from "../../Auth/Auth";
+import { Link } from "react-router-dom";
 import DefaultProfile from "../../images/defaultProfile.gif";
 import DeleteUser from "./DeleteUser/DeleteUser";
 
@@ -88,9 +89,12 @@ class ProfileAdmin extends Component {
                 </div>
                 {isAuthenticated().user.role === "admin" ? (
                   <div className="d-inline-block">
-                    <button className="btn btn-raised btn-success mr-5">
+                    <Link
+                      to={`/users/edit/${user._id}`}
+                      className="btn btn-raised btn-success mr-5"
+                    >
                       Edit Profile
-                    </button>
+                    </Link>
                     <DeleteUser userId={user._id} />
                   </div>
                 ) : null}

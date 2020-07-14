@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
-class EditUser extends Compoent {
+class EditUser extends Component {
   render() {
     return (
-      <div className="container">
+      <section className="container">
         <h2 className="mt-5 mb-5">Edit Profile</h2>
-      </div>
+      </section>
     );
   }
 }
 
-export default EditProfile;
+export default EditUser;

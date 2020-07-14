@@ -9,7 +9,8 @@
   "/api/users/myAccount": "get my account info",
   "/api/users/updateAccount": "update my account info",
   "/api/users/deleteAccount": "remove my account info",
-  "/api/users/:id": "Admin: grab and update/delete any user",
+  "/api/users/:id": "Admin: grab any user",
+  "/api/users/edit/:id": "Admin: update any user",
 
   "/api/posts": "get all posts",
   "/api/posts/getMyPosts": "get all my posts",

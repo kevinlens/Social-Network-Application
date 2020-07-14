@@ -6,7 +6,8 @@ import Signup from "../Pages/Signup/Signup";
 import Signin from "../Pages/Signin/Signin";
 import Profile from "../Pages/Profile/Profile";
 import ProfileAdmin from "../Pages/Profile/Admin";
-import Users from '../Pages/Users/Users'
+import Users from "../Pages/Users/Users";
+import EditUser from "../Pages/Profile/EditProfile/EditUser";
 
 const MainRouter = () => (
   <section>
@@ -18,8 +19,9 @@ const MainRouter = () => (
       <Route exact path="/signin" component={Signin} />
       {/* when there is same path like '/user/' you have to be very careful */}
       <Route path="/user/myAccount" component={Profile} />
+      <Route exact path="/users/edit/:addIdHere" component={EditUser} />
       <Route exact path="/users/:addIdHere" component={ProfileAdmin} />
-
+      {/*=============================================*/}
     </Switch>
   </section>
 );
