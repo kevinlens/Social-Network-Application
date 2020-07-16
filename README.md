@@ -2,4 +2,5 @@
 
 ## Using the full MERN stack
 
-* Testing
+* Implemented the CRUD (create, read, update, delete) operation on users/posts
+* Worked with JWT
