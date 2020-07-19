@@ -4,3 +4,4 @@
 
 * Implemented the CRUD (create, read, update, delete) operation on users/posts
 * Implementing best JWT practice
+* MVC Design Pattern
