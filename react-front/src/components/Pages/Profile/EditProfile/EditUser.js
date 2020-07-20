@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { isAuthenticated } from "../../../Auth/Auth";
+import {Redirect} from "react-router-dom";
 
 class EditUser extends Component {
   constructor() {
@@ -10,6 +11,9 @@ class EditUser extends Component {
       email: "",
       password: "",
       passwordConfirm: "",
+      error: "",
+      loading: false,
+      redirectToProfile: false,
     };
   }
 
@@ -125,7 +129,7 @@ class EditUser extends Component {
         />
       </div>
       <button onClick={this.clickSubmit} className="btn btn-raised btn-primary">
-        Submit
+        Update
       </button>
     </form>
   );
@@ -133,10 +137,38 @@ class EditUser extends Component {
   //
 
   render() {
-    const { name, email, password, passwordConfirm } = this.state;
+    const {
+      id,
+      name,
+      email,
+      password,
+      passwordConfirm,
+      error,
+      loading,
+      redirectToProfile
+    } = this.state;
+
+    if (redirectToProfile) {
+      return <Redirect to={`/user/${id}`} />;
+    }
     return (
       <section className="container">
         <h2 className="mt-5 mb-5">Edit Profile</h2>
+        {loading ? (
+          <div className="jumbotron text-center">
+            <h2>Loading...</h2>
+          </div>
+        ) : (
+          ""
+        )}
+        <div
+          className="alert alert-danger"
+          style={{ display: error ? "" : "none" }}
+        >
+          {Array.isArray(error) ? error[0] : error}
+        </div>
+        {/* ============== */}
+
         {this.signupForm(name, email, password, passwordConfirm)}
       </section>
     );
