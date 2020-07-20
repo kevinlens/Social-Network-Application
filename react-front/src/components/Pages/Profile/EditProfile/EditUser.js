@@ -9,6 +9,7 @@ class EditUser extends Component {
       name: "",
       email: "",
       password: "",
+      passwordConfirm: "",
     };
   }
 
@@ -62,12 +63,14 @@ class EditUser extends Component {
 
   clickSubmit = (event) => {
     event.preventDefault();
+    //
     this.setState({ loading: true });
-    const { name, email, password } = this.state;
+    const { name, email, password, passwordConfirm } = this.state;
     const user = {
       name,
       email,
       password,
+      passwordConfirm,
     };
     console.log(user);
   };
@@ -83,7 +86,7 @@ class EditUser extends Component {
   //       });
   //   });
   // };
-  signupForm = (name, email,password) => (
+  signupForm = (name, email, password, passwordConfirm) => (
     <form>
       <div className="form-group">
         <label className="text-muted">Name</label>
@@ -112,6 +115,15 @@ class EditUser extends Component {
           value={password}
         />
       </div>
+      <div className="form-group">
+        <label className="text-muted">Password Confirm</label>
+        <input
+          onChange={this.handleChange("passwordConfirm")}
+          type="password"
+          className="form-control"
+          value={passwordConfirm}
+        />
+      </div>
       <button onClick={this.clickSubmit} className="btn btn-raised btn-primary">
         Submit
       </button>
@@ -121,11 +133,11 @@ class EditUser extends Component {
   //
 
   render() {
-    const { name, email, password } = this.state;
+    const { name, email, password, passwordConfirm } = this.state;
     return (
       <section className="container">
         <h2 className="mt-5 mb-5">Edit Profile</h2>
-        {this.signupForm(name, email, password)}
+        {this.signupForm(name, email, password, passwordConfirm)}
       </section>
     );
   }

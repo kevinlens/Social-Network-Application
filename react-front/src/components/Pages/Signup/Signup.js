@@ -25,6 +25,7 @@ class Signup extends Component {
 
   clickSubmit = (event) => {
     event.preventDefault();
+    //
     this.setState({ loading: true });
     const { name, email, password, passwordConfirm } = this.state;
     const user = {
