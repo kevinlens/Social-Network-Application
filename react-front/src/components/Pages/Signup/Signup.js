@@ -47,7 +47,7 @@ class Signup extends Component {
     });
   };
 
-  signupForm = (name, email, password, passwordConfirm, loading) => (
+  signupForm = (name, email, password, passwordConfirm) => (
     <form>
       <div className="form-group">
         <label className="text-muted">Name</label>

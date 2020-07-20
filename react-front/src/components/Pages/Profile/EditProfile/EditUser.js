@@ -54,10 +54,78 @@ class EditUser extends Component {
 
   //
 
+  handleChange = (field) => (event) => {
+    this.setState({
+      [field]: event.target.value,
+    });
+  };
+
+  clickSubmit = (event) => {
+    event.preventDefault();
+    this.setState({ loading: true });
+    const { name, email, password } = this.state;
+    const user = {
+      name,
+      email,
+      password,
+    };
+    console.log(user);
+  };
+  //   signup(user).then((data) => {
+  //     if (data.error) this.setState({ error: data.error, loading: false });
+  //     else
+  //       this.setState({
+  //         name: "",
+  //         email: "",
+  //         password: "",
+  //         error: "",
+  //         created: true,
+  //       });
+  //   });
+  // };
+  signupForm = (name, email,password) => (
+    <form>
+      <div className="form-group">
+        <label className="text-muted">Name</label>
+        <input
+          onChange={this.handleChange("name")}
+          type="text"
+          className="form-control"
+          value={name}
+        />
+      </div>
+      <div className="form-group">
+        <label className="text-muted">Email</label>
+        <input
+          onChange={this.handleChange("email")}
+          type="email"
+          className="form-control"
+          value={email}
+        />
+      </div>
+      <div className="form-group">
+        <label className="text-muted">Password</label>
+        <input
+          onChange={this.handleChange("password")}
+          type="password"
+          className="form-control"
+          value={password}
+        />
+      </div>
+      <button onClick={this.clickSubmit} className="btn btn-raised btn-primary">
+        Submit
+      </button>
+    </form>
+  );
+
+  //
+
   render() {
+    const { name, email, password } = this.state;
     return (
       <section className="container">
         <h2 className="mt-5 mb-5">Edit Profile</h2>
+        {this.signupForm(name, email, password)}
       </section>
     );
   }
