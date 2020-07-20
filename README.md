@@ -3,4 +3,5 @@
 ## Using the full MERN stack
 
 * Implemented the CRUD (create, read, update, delete) operation on users/posts
-* Worked with JWT
+* Implementing best JWT practice
+* MVC Design Pattern
