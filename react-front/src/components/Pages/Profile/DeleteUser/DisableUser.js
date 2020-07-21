@@ -6,7 +6,7 @@ class DeleteUser extends Component {
     redirect: false,
   };
   //===================================
-  remove = (userId,token) => {
+  remove = (token) => {
     return fetch(`${process.env.REACT_APP_API_URL}/api/users/deleteAccount`, {
       method: "DELETE",
       headers: {

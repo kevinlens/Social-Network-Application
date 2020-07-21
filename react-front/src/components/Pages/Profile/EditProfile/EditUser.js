@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { isAuthenticated } from "../../../Auth/Auth";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class EditUser extends Component {
   constructor() {
@@ -20,7 +20,7 @@ class EditUser extends Component {
   //
 
   init = (userId) => {
-    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -41,12 +41,30 @@ class EditUser extends Component {
             id: data.data._id,
             name: data.data.name,
             email: data.data.email,
+            error:''
           });
         }
       });
   };
 
   //
+
+  update = (userId, token, user) => {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        //provides the current users jwt
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(user)
+    })
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((err) => console.log(err));
+  };
 
   //
 
@@ -76,20 +94,21 @@ class EditUser extends Component {
       password,
       passwordConfirm,
     };
-    console.log(user);
+
+    const userId = this.props.match.params.addIdHere;
+    const token = isAuthenticated().token;
+
+    this.update(userId, token, user)
+      .then((data) => {
+      if (data.error) this.setState({ error: data.error, loading: false })
+      else
+        this.setState({
+          redirectToProfile: true,
+        });
+    });
+
   };
-  //   signup(user).then((data) => {
-  //     if (data.error) this.setState({ error: data.error, loading: false });
-  //     else
-  //       this.setState({
-  //         name: "",
-  //         email: "",
-  //         password: "",
-  //         error: "",
-  //         created: true,
-  //       });
-  //   });
-  // };
+
   signupForm = (name, email, password, passwordConfirm) => (
     <form>
       <div className="form-group">
@@ -145,7 +164,7 @@ class EditUser extends Component {
       passwordConfirm,
       error,
       loading,
-      redirectToProfile
+      redirectToProfile,
     } = this.state;
 
     if (redirectToProfile) {
