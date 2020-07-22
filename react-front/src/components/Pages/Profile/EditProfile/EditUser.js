@@ -10,7 +10,6 @@ class EditUser extends Component {
       name: "",
       email: "",
       password: "",
-      passwordConfirm: "",
       error: "",
       loading: false,
       redirectToProfile: false,
@@ -41,7 +40,7 @@ class EditUser extends Component {
             id: data.data._id,
             name: data.data.name,
             email: data.data.email,
-            error:''
+            error: "",
           });
         }
       });
@@ -50,7 +49,7 @@ class EditUser extends Component {
   //
 
   update = (userId, token, user) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+    return fetch(`${process.env.REACT_APP_API_URL}/api/users/edit/${userId}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
@@ -58,10 +57,10 @@ class EditUser extends Component {
         //provides the current users jwt
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify(user),
     })
       .then((response) => {
-        console.log(response)
+        return response.json();
       })
       .catch((err) => console.log(err));
   };
@@ -87,29 +86,26 @@ class EditUser extends Component {
     event.preventDefault();
     //
     this.setState({ loading: true });
-    const { name, email, password, passwordConfirm } = this.state;
+    const { name, email, password } = this.state;
     const user = {
       name,
       email,
       password,
-      passwordConfirm,
     };
 
     const userId = this.props.match.params.addIdHere;
     const token = isAuthenticated().token;
 
-    this.update(userId, token, user)
-      .then((data) => {
-      if (data.error) this.setState({ error: data.error, loading: false })
+    this.update(userId, token, user).then((data) => {
+      if (data.error) this.setState({ error: data.error, loading: false });
       else
         this.setState({
           redirectToProfile: true,
         });
     });
-
   };
 
-  signupForm = (name, email, password, passwordConfirm) => (
+  signupForm = (name, email, password) => (
     <form>
       <div className="form-group">
         <label className="text-muted">Name</label>
@@ -138,15 +134,6 @@ class EditUser extends Component {
           value={password}
         />
       </div>
-      <div className="form-group">
-        <label className="text-muted">Password Confirm</label>
-        <input
-          onChange={this.handleChange("passwordConfirm")}
-          type="password"
-          className="form-control"
-          value={passwordConfirm}
-        />
-      </div>
       <button onClick={this.clickSubmit} className="btn btn-raised btn-primary">
         Update
       </button>
@@ -161,7 +148,6 @@ class EditUser extends Component {
       name,
       email,
       password,
-      passwordConfirm,
       error,
       loading,
       redirectToProfile,
@@ -188,7 +174,7 @@ class EditUser extends Component {
         </div>
         {/* ============== */}
 
-        {this.signupForm(name, email, password, passwordConfirm)}
+        {this.signupForm(name, email, password)}
       </section>
     );
   }

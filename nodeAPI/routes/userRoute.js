@@ -48,6 +48,7 @@ router.use(authController.restrictTo('admin'));
 router
   .route('/delete/:id')
   .delete(userController.deleteUser);
+  
 router
   .route('/edit/:id')
   .patch(userController.updateUser);
