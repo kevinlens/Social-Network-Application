@@ -154,7 +154,7 @@ class EditUser extends Component {
     } = this.state;
 
     if (redirectToProfile) {
-      return <Redirect to={`/user/${id}`} />;
+      return <Redirect to={`/users/${id}`} />;
     }
     return (
       <section className="container">
