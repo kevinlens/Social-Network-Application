@@ -56,11 +56,14 @@ exports.updateAccount = catchAsync(
     //       'This route is not for password updates. Please use the route /updateMyPassword',
     //   });
     // }
-
+    //
+    let bod = req.body;
+    bod.password = await bcrypt.hash(bod.password, 12);
+    //
     //grabs the user's req.body and filter out(select) only their updated'name','email'
     //this is special function you built at the very top of this document
     const filteredBody = filterObj(
-      req.body,
+      bod,
       'name',
       'email',
       'password'
@@ -130,8 +133,8 @@ exports.getUsers = catchAsync(
 exports.updateUser = catchAsync(
   async (req, res, next) => {
     //
-    let bod = req.body
-    bod.password = await bcrypt.hash(bod.password, 12) 
+    let bod = req.body;
+    bod.password = await bcrypt.hash(bod.password, 12);
     //
     const doc = await User.findByIdAndUpdate(
       req.params.id,

@@ -143,7 +143,6 @@ class UpdateAccount extends Component {
 
   render() {
     const {
-      id,
       name,
       email,
       password,
@@ -153,7 +152,7 @@ class UpdateAccount extends Component {
     } = this.state;
 
     if (redirectToProfile) {
-      return <Redirect to={`/users/${id}`} />;
+      return <Redirect to={`/user/myAccount`} />;
     }
     return (
       <section className="container">
