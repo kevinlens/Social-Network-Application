@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const catchAsync = require('../utilities/catchAsync');
+const bcrypt = require('bcryptjs');
 
 //'...allowedFields' is an array created by default containing all arguments passed
 const filterObj = (obj, ...allowedFields) => {
@@ -127,9 +128,13 @@ exports.getUsers = catchAsync(
 
 exports.updateUser = catchAsync(
   async (req, res, next) => {
+    //
+    let bod = req.body
+    bod.password = await bcrypt.hash(bod.password, 12) 
+    //
     const doc = await User.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      bod,
       {
         //this states that the document is new
         new: true,

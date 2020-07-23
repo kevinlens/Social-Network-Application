@@ -90,7 +90,7 @@ class EditUser extends Component {
     const user = {
       name,
       email,
-      password,
+      password: password || undefined,
     };
 
     const userId = this.props.match.params.addIdHere;
