@@ -7,7 +7,8 @@ class DeleteUser extends Component {
   };
   //===================================
   remove = (userId,token) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+
+    return fetch(`${process.env.REACT_APP_API_URL}/api/users/delete/${userId}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -17,6 +18,7 @@ class DeleteUser extends Component {
       },
     })
       .then((response) => {
+        console.log(response)
         return response.json();
       })
       .catch((err) => console.log(err));

@@ -2,15 +2,55 @@ import React, { Component } from "react";
 import { isAuthenticated } from "../../Auth/Auth";
 import { Link } from "react-router-dom";
 import DefaultProfile from "../../images/defaultProfile.gif";
-import DisableUser from './DeleteUser/DisableUser'
+import DisableUser from "./DeleteUser/DisableUser";
 
 class Profile extends Component {
   constructor() {
     super();
     this.state = {
       user: "",
+      error: "",
+      redirectToSignIn: false,
     };
   }
+
+  //
+
+  init = (userId) => {
+    fetch(`${process.env.REACT_APP_API_URL}/api/users/${userId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        //provides the current users jwt
+        Authorization: `Bearer ${isAuthenticated().token}`,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data.error) {
+          this.setState({ error: data.error });
+        } else {
+          //set the state
+          this.setState({ user: data.data });
+        }
+      });
+  };
+
+  //
+
+  //
+
+  // allows admin to search for any user through their users by putting in the url
+  componentDidMount() {
+    const userId = isAuthenticated().user._id;
+    //
+    this.init(userId);
+  }
+
+  //
 
   render() {
     const { user } = this.state;
@@ -33,8 +73,8 @@ class Profile extends Component {
             {isAuthenticated() ? (
               <>
                 <div className="lead mt-2">
-                  <p>Hello {isAuthenticated().user.name}</p>
-                  <p>Email: {isAuthenticated().user.email}</p>
+                  <p>Hello {user.name}</p>
+                  <p>Email: {user.email}</p>
                   <p>
                     {`Joined: ${new Date(
                       isAuthenticated().user.created
@@ -44,11 +84,11 @@ class Profile extends Component {
                 <div className="d-inline-block">
                   <Link
                     className="btn btn-raised btn-success mr-5"
-                    to={"/user/updateAccount"}
+                    to={"/users/updateAccount"}
                   >
                     Edit Profile
                   </Link>
-                <DisableUser />
+                  <DisableUser />
                 </div>
               </>
             ) : null}

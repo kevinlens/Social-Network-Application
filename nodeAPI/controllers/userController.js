@@ -47,22 +47,23 @@ exports.getUser = catchAsync(
 exports.updateAccount = catchAsync(
   async (req, res, next) => {
     //
-    if (
-      req.body.password ||
-      req.body.passwordConfirm
-    ) {
-      res.status(400).json({
-        error:
-          'This route is not for password updates. Please use the route /updateMyPassword',
-      });
-    }
+    // if (
+    //   req.body.password ||
+    //   req.body.passwordConfirm
+    // ) {
+    //   res.status(400).json({
+    //     error:
+    //       'This route is not for password updates. Please use the route /updateMyPassword',
+    //   });
+    // }
 
     //grabs the user's req.body and filter out(select) only their updated'name','email'
     //this is special function you built at the very top of this document
     const filteredBody = filterObj(
       req.body,
       'name',
-      'email'
+      'email',
+      'password'
     );
     //
     //update user info with adjusted object properties
