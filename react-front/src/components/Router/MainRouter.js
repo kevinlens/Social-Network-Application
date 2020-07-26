@@ -9,20 +9,22 @@ import ProfileAdmin from "../Pages/Profile/Admin";
 import Users from "../Pages/Users/Users";
 import UpdateAccount from "../Pages/Profile/EditProfile/UpdateAccount";
 import EditUser from "../Pages/Profile/EditProfile/EditUser";
+//
+import PrivateRoute from "./../Auth/PrivateRoute";
 
 const MainRouter = () => (
   <section>
     <Menu />
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route exact path="/users" component={Users} />
+      <PrivateRoute exact path="/users" component={Users} />
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/signin" component={Signin} />
       {/* when there is same path like '/user/' you have to be very careful */}
-      <Route path="/user/myAccount" component={Profile} />
-      <Route exact path="/users/updateAccount" component={UpdateAccount} />
-      <Route exact path="/users/edit/:addIdHere" component={EditUser} />
-      <Route exact path="/users/:addIdHere" component={ProfileAdmin} />
+      <PrivateRoute path="/user/myAccount" component={Profile} />
+      <PrivateRoute exact path="/users/updateAccount" component={UpdateAccount} />
+      <PrivateRoute exact path="/users/edit/:addIdHere" component={EditUser} />
+      <PrivateRoute exact path="/users/:addIdHere" component={ProfileAdmin} />
       {/*=============================================*/}
     </Switch>
   </section>
