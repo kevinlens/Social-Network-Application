@@ -58,7 +58,12 @@ exports.updateAccount = catchAsync(
     // }
     //
     let bod = req.body;
-    bod.password = await bcrypt.hash(bod.password, 12);
+    if (bod.password !== undefined)
+      bod.password = await bcrypt.hash(
+        bod.password,
+        12
+      );
+
     //
     //grabs the user's req.body and filter out(select) only their updated'name','email'
     //this is special function you built at the very top of this document
@@ -134,7 +139,12 @@ exports.updateUser = catchAsync(
   async (req, res, next) => {
     //
     let bod = req.body;
-    bod.password = await bcrypt.hash(bod.password, 12);
+    if (bod.password !== undefined)
+      bod.password = await bcrypt.hash(
+        bod.password,
+        12
+      );
+
     //
     const doc = await User.findByIdAndUpdate(
       req.params.id,

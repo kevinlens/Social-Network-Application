@@ -9,7 +9,7 @@ import ProfileAdmin from "../Pages/Profile/Admin";
 import Users from "../Pages/Users/Users";
 import UpdateAccount from "../Pages/Profile/EditProfile/UpdateAccount";
 import EditUser from "../Pages/Profile/EditProfile/EditUser";
-//
+//This is to prevent unauthenticated users from accessing page and redirecting
 import PrivateRoute from "./../Auth/PrivateRoute";
 
 const MainRouter = () => (
