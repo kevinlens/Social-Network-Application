@@ -1,6 +1,10 @@
 const User = require('../models/userModel');
 const catchAsync = require('../utilities/catchAsync');
 const bcrypt = require('bcryptjs');
+//(to parse form data, like file uploads/images)
+const formidable = require('formidable');
+//this stands for 'file system' its to read files and its built-in
+const fs = require('fs');
 
 //'...allowedFields' is an array created by default containing all arguments passed
 const filterObj = (obj, ...allowedFields) => {
@@ -135,36 +139,87 @@ exports.getUsers = catchAsync(
   }
 );
 
+// exports.updateUser = catchAsync(
+//   async (req, res, next) => {
+//     //
+//     let bod = req.body;
+//     if (bod.password !== undefined)
+//       bod.password = await bcrypt.hash(
+//         bod.password,
+//         12
+//       );
+
+//     //
+//     const doc = await User.findByIdAndUpdate(
+//       req.params.id,
+//       bod,
+//       {
+//         //this states that the document is new
+//         new: true,
+//         runValidators: true,
+//       }
+//     );
+//     //
+//     if (!doc) {
+//       res.status(404).json({
+//         error: 'No document found with that ID',
+//       });
+//     }
+
+//     res.status(200).json({
+//       status: 'success',
+//       data: doc,
+//     });
+//   }
+// );
+
 exports.updateUser = catchAsync(
   async (req, res, next) => {
-    //
-    let bod = req.body;
-    if (bod.password !== undefined)
-      bod.password = await bcrypt.hash(
-        bod.password,
+    console.log('🥑')
+    /*When you are using form data like this one you have to 
+  go in Postman and use 'x-www-form-urlencoded' instead 'raw'*/
+    //formidable package method that will give us form fields
+    // Conventionally people use this to upload files (like Images,Audios,etc )
+    let form = new formidable.IncomingForm();
+    /*tells the form to keep the file upload's in its format of jpeg,png,ect */
+    form.keepExtensions = true;
+
+    if (req.body.password !== undefined)
+      req.body.password = await bcrypt.hash(
+        req.body.password,
         12
       );
 
-    //
-    const doc = await User.findByIdAndUpdate(
-      req.params.id,
-      bod,
-      {
-        //this states that the document is new
-        new: true,
-        runValidators: true,
+    //we are not using catchAsync, therefore the 'err' parameter is there
+    //parsing so that the 'form' method is able to read it
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        return res.status(400).json({
+          error: 'Photo could not be uploaded',
+        });
       }
-    );
-    //
-    if (!doc) {
-      res.status(404).json({
-        error: 'No document found with that ID',
-      });
-    }
+      //save user
+      let user = req.body
+      if (files.photo) {
+        user.photo.data = fs.readFileSync(
+          files.photo.path
+        );
+        user.photo.contentType = files.photo.type;
+      }
+      //
 
-    res.status(200).json({
-      status: 'success',
-      data: doc,
+      //
+      user.save((errs, result) => {
+        if (errs) {
+          return res.status(400).json({
+            error: errs,
+          });
+        }
+        res.status(200).json({
+          post: result,
+          message: 'success',
+        });
+      });
     });
   }
 );

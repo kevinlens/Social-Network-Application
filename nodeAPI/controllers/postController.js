@@ -47,6 +47,7 @@ exports.createPost = (req, res, next) => {
   //
   //we are not using catchAsync, therefore the 'err' parameter is there
   //parsing so that the 'form' method is able to read it
+  //the form will have fields[] and user inputted unique files
   form.parse(req, (err, fields, files) => {
     if (err) {
       return res.status(400).json({
@@ -55,7 +56,7 @@ exports.createPost = (req, res, next) => {
     }
 
     //create a new post from post model
-    //pass in the users 'fields' to create a new post
+    //pass in the user's 'fields' like name, to create a new post called [field]
     const post = new Post(fields);
     //gives the post's ownership to user who has userID
     post.postedBy = req.user;
