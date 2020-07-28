@@ -57,11 +57,14 @@ const userSchema = new mongoose.Schema({
     default: Date.now,
   },
   //When account info was updated
-  updated: Date,
-  photo: {
-    data: Buffer,
-    contentType: String,
+  updated: {
+    type: Date,
+    default: Date.now,
   },
+  // photo: [{
+  //   data: Buffer,
+  //   contentType: String,
+  // }],
   active: {
     type: Boolean,
     default: true,

@@ -139,90 +139,94 @@ exports.getUsers = catchAsync(
   }
 );
 
-// exports.updateUser = catchAsync(
-//   async (req, res, next) => {
-//     //
-//     let bod = req.body;
-//     if (bod.password !== undefined)
-//       bod.password = await bcrypt.hash(
-//         bod.password,
-//         12
-//       );
-
-//     //
-//     const doc = await User.findByIdAndUpdate(
-//       req.params.id,
-//       bod,
-//       {
-//         //this states that the document is new
-//         new: true,
-//         runValidators: true,
-//       }
-//     );
-//     //
-//     if (!doc) {
-//       res.status(404).json({
-//         error: 'No document found with that ID',
-//       });
-//     }
-
-//     res.status(200).json({
-//       status: 'success',
-//       data: doc,
-//     });
-//   }
-// );
-
 exports.updateUser = catchAsync(
   async (req, res, next) => {
-    console.log('🥑')
-    /*When you are using form data like this one you have to 
-  go in Postman and use 'x-www-form-urlencoded' instead 'raw'*/
-    //formidable package method that will give us form fields
-    // Conventionally people use this to upload files (like Images,Audios,etc )
-    let form = new formidable.IncomingForm();
-    /*tells the form to keep the file upload's in its format of jpeg,png,ect */
-    form.keepExtensions = true;
-
-    if (req.body.password !== undefined)
-      req.body.password = await bcrypt.hash(
-        req.body.password,
+    //
+    let bod = req.body;
+    if (bod.password !== undefined)
+      bod.password = await bcrypt.hash(
+        bod.password,
         12
       );
 
-    //we are not using catchAsync, therefore the 'err' parameter is there
-    //parsing so that the 'form' method is able to read it
-    form.parse(req, (err, fields, files) => {
-      if (err) {
-        return res.status(400).json({
-          error: 'Photo could not be uploaded',
-        });
+    //
+    const doc = await User.findByIdAndUpdate(
+      req.params.id,
+      bod,
+      {
+        //this states that the document is new
+        new: true,
+        runValidators: true,
       }
-      //save user
-      let user = req.body
-      if (files.photo) {
-        user.photo.data = fs.readFileSync(
-          files.photo.path
-        );
-        user.photo.contentType = files.photo.type;
-      }
-      //
-
-      //
-      user.save((errs, result) => {
-        if (errs) {
-          return res.status(400).json({
-            error: errs,
-          });
-        }
-        res.status(200).json({
-          post: result,
-          message: 'success',
-        });
+    );
+    //
+    if (!doc) {
+      res.status(404).json({
+        error: 'No document found with that ID',
       });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      data: doc,
     });
   }
 );
+
+// exports.updateUser = catchAsync(
+//   async (req, res, next) => {
+//     /*When you are using form data like this one you have to 
+//   go in Postman and use 'x-www-form-urlencoded' instead 'raw'*/
+//     //formidable package method that will give us form fields
+//     // Conventionally people use this to upload files (like Images,Audios,etc )
+//     let form = new formidable.IncomingForm();
+//     /*tells the form to keep the file upload's in its format of jpeg,png,ect */
+//     form.keepExtensions = true;
+
+//     let user = req.body
+
+//     if (req.body.password !== undefined)
+//       req.body.password = await bcrypt.hash(
+//         req.body.password,
+//         12
+//       );
+//       console.log(req.body)
+//       console.log('🥑🥑🥑🥑🥑🥑🥑🥑🥑🥑🥑🥑🥑🥑🥑🥑🥑')
+//       console.log(user)
+
+//     //we are not using catchAsync, therefore the 'err' parameter is there
+//     //parsing so that the 'form' method is able to read it
+//     form.parse(req, (err, fields, files) => {
+//       if (err) {
+//         return res.status(400).json({
+//           error: 'Photo could not be uploaded',
+//         });
+//       }
+//       //save user
+//       if (files.photo) {
+//         user.photo.data = fs.readFileSync(
+//           files.photo.path
+//         );
+//         user.photo.contentType = files.photo.type;
+//       }
+//       //
+//     let user = req.body
+//       //
+//       // user.save((errs, result) => {
+//       //   if (errs) {
+//       //     return res.status(400).json({
+//       //       error: errs,
+//       //     });
+//       //   }
+//       //   res.status(200).json({
+//       //     post: result,
+//       //     message: 'success',
+//       //   });
+//       // });
+
+//     });
+//   }
+// );
 
 exports.deleteUser = catchAsync(
   async (req, res, next) => {

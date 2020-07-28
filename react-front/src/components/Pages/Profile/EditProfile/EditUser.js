@@ -49,17 +49,19 @@ class EditUser extends Component {
   //
 
   update = (userId, token, user) => {
-    console.log(user)
+    console.log(user);
     return fetch(`${process.env.REACT_APP_API_URL}/api/users/edit/${userId}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
-        // "Content-Type": "application/json", reserved for JSON data, not for FORM data
+        "Content-Type": "application/json", 
+        // reserved for JSON data, not for FORM data
         //provides the current users jwt
         Authorization: `Bearer ${token}`,
       },
-      // body: JSON.stringify(user) usually you have to stringify it
-      body: user,
+      body: JSON.stringify(user)
+      //  usually you have to stringify it
+      // body: user,
     })
       .then((response) => {
         return response.json();
@@ -71,7 +73,7 @@ class EditUser extends Component {
 
   // allows admin to search for any user through their users by putting in the url
   componentDidMount() {
-    this.userData = new FormData();
+    // this.userData = new FormData();
     const userId = this.props.match.params.addIdHere;
     //
     this.init(userId);
@@ -82,7 +84,7 @@ class EditUser extends Component {
   handleChange = (field) => (event) => {
     const value =
       field === "photo" ? event.target.files[0] : event.target.value;
-    this.userData.set(field, value);
+    // this.userData.set(field, value);
     this.setState({ [field]: value });
   };
 
@@ -100,7 +102,8 @@ class EditUser extends Component {
     const userId = this.props.match.params.addIdHere;
     const token = isAuthenticated().token;
 
-    this.update(userId, token, this.userData).then((data) => {
+    this.update(userId, token, user).then((data) => {
+      // console.log(this.userData)
       if (data.error) this.setState({ error: data.error, loading: false });
       else
         this.setState({
@@ -111,7 +114,8 @@ class EditUser extends Component {
 
   signupForm = (name, email, password) => (
     <form>
-      <div className="form-group">
+
+      {/* <div className="form-group">
         <label className="text-muted">Profile Photo</label>
         <input
           onChange={this.handleChange("photo")}
@@ -119,7 +123,8 @@ class EditUser extends Component {
           accept="image/*"
           className="form-control"
         />
-      </div>
+      </div> */}
+
       <div className="form-group">
         <label className="text-muted">Name</label>
         <input
